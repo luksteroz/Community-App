@@ -1,6 +1,6 @@
 //Konfiguracja Webpack
 module.exports = {
-    entry: "./js/project.jsx",
+    entry: "./js/app.jsx",
     output: { filename: "./js/out.js" },
     watch: true,
     module: {
@@ -8,7 +8,11 @@ module.exports = {
             {
                 test: /\.jsx$/,  exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: { presets: ['es2015', 'stage-2' , 'react'] }
+                query: {
+                    cacheDirectory: true,
+                    plugins: ['transform-decorators-legacy' ],
+                    presets: ['es2015', 'stage-2', 'react'],
+                 }
             }
         ]
     }
