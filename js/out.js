@@ -11552,11 +11552,7 @@ var Header = function (_React$Component) {
             return _react2.default.createElement(
                 'header',
                 null,
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    'COMMUNITY BOARD'
-                )
+                _react2.default.createElement('span', null)
             );
         }
     }]);
@@ -11593,7 +11589,6 @@ var SortableComponent = function (_React$Component2) {
                 console.log("funkcja odpalona");
                 _this2.props.onAdd(items, _this2.props.status);
             }
-            console.log(_this2.state.items, "glowny komponent");
         };
 
         _this2.handleEditTask = function (event) {
@@ -11611,7 +11606,7 @@ var SortableComponent = function (_React$Component2) {
 
         _this2.handleChangeColor = function (event) {
             console.log(event.currentTarget.style.color);
-            event.currentTarget.style.color == "yellow" ? event.currentTarget.style.color = "black" : event.currentTarget.style.color = "yellow";
+            event.currentTarget.style.color == "yellow" ? event.currentTarget.style.color = "lightgrey" : event.currentTarget.style.color = "yellow";
         };
 
         _this2.handleRemoveTask = function (e) {
@@ -11624,12 +11619,6 @@ var SortableComponent = function (_React$Component2) {
         };
 
         _this2.handleMoveItem = function (e) {
-            //   const items = this.state.items.slice();
-            //   const search = items.indexOf(e.currentTarget.value);
-            //   const element = items.splice(search, 1)
-            //   this.setState({
-            //       items: items,
-            //   });
             var element = e.currentTarget.value;
             if (typeof _this2.props.onMove === "function") {
                 _this2.props.onMove(element, _this2.props.status);
@@ -11647,7 +11636,6 @@ var SortableComponent = function (_React$Component2) {
     _createClass(SortableComponent, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            console.log("Dostałem propsy");
             this.setState({
                 items: nextProps.items
             });
@@ -11657,7 +11645,6 @@ var SortableComponent = function (_React$Component2) {
         value: function render() {
             var _this3 = this;
 
-            console.log(this.props, "Propsy");
             var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
                 return _react2.default.createElement(
                     'p',
@@ -11674,16 +11661,16 @@ var SortableComponent = function (_React$Component2) {
                     'li',
                     { className: 'boardText' },
                     _react2.default.createElement(
+                        'a',
+                        { onClick: _this3.handleChangeColor.bind(_this3),
+                            style: { color: "lightgrey" } },
+                        '\u2605'
+                    ),
+                    _react2.default.createElement(
                         'button',
                         { onClick: _this3.handleRemoveTask,
                             value: value },
                         _this3.props.remove
-                    ),
-                    _react2.default.createElement(
-                        'a',
-                        { onClick: _this3.handleChangeColor.bind(_this3),
-                            style: { color: "black" } },
-                        '\u2605'
                     ),
                     _react2.default.createElement(
                         'button',
@@ -11695,7 +11682,6 @@ var SortableComponent = function (_React$Component2) {
                         null,
                         value
                     ),
-                    _react2.default.createElement('textarea', { placeholder: 'Descipription here..' }),
                     _react2.default.createElement(DragHandle, null)
                 );
             });
@@ -11713,7 +11699,6 @@ var SortableComponent = function (_React$Component2) {
                     })
                 );
             });
-
             return _react2.default.createElement(
                 'div',
                 null,
@@ -11733,15 +11718,15 @@ var SortableComponent = function (_React$Component2) {
                         )
                     ),
                     _react2.default.createElement(SortableList, { items: this.state.items, onSortEnd: this.onSortEnd,
-                        useDragHandle: true })
+                        useDragHandle: true, helperClass: 'SortableHelper' })
                 ),
                 _react2.default.createElement(
                     'form',
                     { onSubmit: this.handleAddTask },
                     _react2.default.createElement('input', { type: 'text',
                         name: 'newTask',
-                        placeholder: 'add',
-                        maxLength: 25, value: this.state.inputText, onChange: this.handleEditTask })
+                        placeholder: 'New task...',
+                        value: this.state.inputText, onChange: this.handleEditTask })
                 )
             );
         }
@@ -11764,6 +11749,12 @@ var ChatApp = function (_React$Component3) {
             });
         };
 
+        _this4.handleAddName = function (event) {
+            event.preventDefault();
+            console.log(_this4.state.userName);
+            var name = _this4.state.userName;
+        };
+
         _this4.handleChangeText = function (event) {
             _this4.setState({
                 chatInput: event.target.value
@@ -11772,12 +11763,8 @@ var ChatApp = function (_React$Component3) {
 
         _this4.handleSubmitMessage = function (event) {
             event.preventDefault();
-            console.log("dziala");
             var messages = _this4.state.messages.slice();
             messages.push(_this4.state.chatInput);
-            if (_this4.state.userName.length > 0) {} else {
-                alert("Enter User Name");
-            }
             _this4.setState({
                 chatInput: "",
                 messages: messages
@@ -11795,28 +11782,22 @@ var ChatApp = function (_React$Component3) {
     _createClass(ChatApp, [{
         key: 'render',
         value: function render() {
-            var userName = "unknown user";
             var chat = this.state.messages.map(function (value, index) {
                 return _react2.default.createElement(
                     'li',
                     { key: index },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'user' },
-                        userName
-                    ),
                     value
                 );
             });
             return _react2.default.createElement(
                 'div',
                 { className: 'chat' },
-                _react2.default.createElement('input', { type: 'text',
-                    name: 'userName',
-                    onChange: this.handleChangeName,
-                    value: this.state.userName,
-                    placeholder: 'Your name...',
-                    maxLength: 20 }),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    name,
+                    ' SAY SOMETHING.'
+                ),
                 _react2.default.createElement(
                     'div',
                     { className: 'messages' },
@@ -11834,6 +11815,12 @@ var ChatApp = function (_React$Component3) {
                         onChange: this.handleChangeText,
                         value: this.state.chatInput,
                         placeholder: 'Write a message...' })
+                ),
+                _react2.default.createElement(
+                    'form',
+                    { onSubmit: this.handleAddName },
+                    _react2.default.createElement('input', { type: 'text', value: this.state.userName, onChange: this.handleChangeName, placeholder: 'Your name..' }),
+                    _react2.default.createElement('input', { type: 'submit' })
                 )
             );
         }
@@ -11851,7 +11838,6 @@ var App = function (_React$Component4) {
         var _this5 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this5.handleAddNewTask = function (array, taskList) {
-            console.log(array, "tablica?????????");
             var curr = "";
             if (taskList === "ToDo") {
                 curr = "toDo";
@@ -11866,27 +11852,21 @@ var App = function (_React$Component4) {
         _this5.handleOnMove = function (element, taskList) {
             var _this5$setState2;
 
-            console.log(element, "element");
             var tab1 = [];
             var tab2 = [];
             var curr = "";
             var next = "";
-            console.log(taskList, 'dupaaaaaaaaaaa');
             if (taskList === "ToDo") {
                 tab1 = _this5.state.toDo.slice();
                 tab2 = _this5.state.doing.slice();
                 curr = "toDo";
                 next = "doing";
-                console.log(tab1, "dochodzi do todo");
             } else if (taskList === "Doing") {
                 tab1 = _this5.state.doing.slice();
                 tab2 = _this5.state.done.slice();
                 curr = "doing";
                 next = "done";
-                console.log("dochodzi do doing");
-            } else if (taskList === "Done") {
-                console.log("doneeeeeee");
-            }
+            } else if (taskList === "Done") {}
             tab1 = tab1.filter(function (item) {
                 return item !== element;
             });
@@ -11895,8 +11875,6 @@ var App = function (_React$Component4) {
             // console.log(find, "czym jest find??????");
             // tab1 = tab1.splice(find,1);
             tab2.push(element);
-            console.log(tab1, "tablica1", tab2, " po updatetablica2");
-
             _this5.setState((_this5$setState2 = {}, _defineProperty(_this5$setState2, '' + curr, tab1), _defineProperty(_this5$setState2, '' + next, tab2), _this5$setState2));
             console.log(_this5.state, "czy state sie updatuje");
         };
@@ -11919,9 +11897,9 @@ var App = function (_React$Component4) {
                 _react2.default.createElement(
                     'div',
                     { className: 'container' },
-                    _react2.default.createElement(SortableComponent, { items: this.state.toDo, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'ToDo', remove: 'Remove', action2: 'Done' }),
+                    _react2.default.createElement(SortableComponent, { items: this.state.toDo, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'ToDo', remove: 'Remove', action2: 'Doing' }),
                     _react2.default.createElement(SortableComponent, { items: this.state.doing, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'Doing', remove: 'Remove', action2: 'Done' }),
-                    _react2.default.createElement(SortableComponent, { items: this.state.done, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'Done', remove: 'Remove', action2: 'Remove' }),
+                    _react2.default.createElement(SortableComponent, { items: this.state.done, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'Done', remove: 'Remove', action2: 'Clear' }),
                     _react2.default.createElement(ChatApp, null)
                 ),
                 ';'
