@@ -2,17 +2,11 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import {render} from 'react-dom';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
+import ChatApp from "./ChatApp.jsx";
+import Header from "./Header.jsx";
 
 
 
-
-class Header extends React.Component {
-    render(){
-        return <header>
-        <span></span>
-        </header>
-    }
-}
 
 class SortableComponent extends React.Component {
     constructor(props){
@@ -122,66 +116,66 @@ class SortableComponent extends React.Component {
   }
 }
 
-class ChatApp extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            messages: [],
-            chatInput: "",
-            userName: "",
-        }
-    }
-    handleChangeName=(event)=>{
-        this.setState({
-            userName: event.target.value,
-        })
-    }
-    handleAddName=(event)=>{
-        event.preventDefault();
-        console.log(this.state.userName.);
-        const name = this.state.userName
-    }
-    handleChangeText=(event)=>{
-        this.setState({
-            chatInput: event.target.value,
-        })
-    }
-    handleSubmitMessage=(event)=> {
-        event.preventDefault();
-        const messages = this.state.messages.slice();
-        messages.push(this.state.chatInput);
-            this.setState({
-            chatInput: "",
-            messages: messages,
-            });
-      }
-        render(){
-            const chat = this.state.messages.map((value, index) => (
-                <li key={index}>
-                    {value}
-                </li>
-            ));
-            return ( <div className="chat">
-            <p> SAY SOMETHING.</p>
-            <div className="messages">
-                <ul>
-                    {chat}
-                </ul>
-            </div>
-            <form onSubmit={this.handleSubmitMessage}>
-                <input type="text"
-                    name="chatInput"
-                    onChange={this.handleChangeText}
-                    value={this.state.chatInput}
-                    placeholder="Write a message..." />
-          </form>
-            <form onSubmit={this.handleAddName}>
-                <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.."/>
-                <input type="submit"/>
-            </form>
-          </div>);
-        }
-    }
+// class ChatApp extends React.Component{
+//     constructor(props){
+//         super(props);
+//         this.state={
+//             messages: [],
+//             chatInput: "",
+//             userName: "",
+//         }
+//     }
+//     handleChangeName=(event)=>{
+//         this.setState({
+//             userName: event.target.value,
+//         })
+//     }
+//     handleAddName=(event)=>{
+//         event.preventDefault();
+//         console.log(this.state.userName.);
+//         const name = this.state.userName
+//     }
+//     handleChangeText=(event)=>{
+//         this.setState({
+//             chatInput: event.target.value,
+//         })
+//     }
+//     handleSubmitMessage=(event)=> {
+//         event.preventDefault();
+//         const messages = this.state.messages.slice();
+//         messages.push(this.state.chatInput);
+//             this.setState({
+//             chatInput: "",
+//             messages: messages,
+//             });
+//       }
+//         render(){
+//             const chat = this.state.messages.map((value, index) => (
+//                 <li key={index}>
+//                     {value}
+//                 </li>
+//             ));
+//             return ( <div className="chat">
+//             <p> SAY SOMETHING.</p>
+//             <div className="messages">
+//                 <ul>
+//                     {chat}
+//                 </ul>
+//             </div>
+//             <form onSubmit={this.handleSubmitMessage}>
+//                 <input type="text"
+//                     name="chatInput"
+//                     onChange={this.handleChangeText}
+//                     value={this.state.chatInput}
+//                     placeholder="Write a message..." />
+//           </form>
+//             <form onSubmit={this.handleAddName}>
+//                 <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.."/>
+//                 <input type="submit"/>
+//             </form>
+//           </div>);
+//         }
+//     }
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -226,9 +220,6 @@ class App extends React.Component{
             return item !== element;
         });
 
-        // const find = tab1.indexOf(element);
-        // console.log(find, "czym jest find??????");
-        // tab1 = tab1.splice(find,1);
         tab2.push(element);
         this.setState({
             [`${curr}`]: tab1,
@@ -244,7 +235,7 @@ class App extends React.Component{
             <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done"/>
             <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" action2="Clear"/>
             <ChatApp/>
-        </div>;
+        </div>
     </div>
     }
 }
