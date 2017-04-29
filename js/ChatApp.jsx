@@ -5,12 +5,12 @@ import React from 'react';
 
 
 const config = {
-apiKey: "AIzaSyCqddWFL4sa69b60Apac8S1_p3vvAmh2eE",
-authDomain: "chatapp-2b04c.firebaseapp.com",
-databaseURL: "https://chatapp-2b04c.firebaseio.com",
-projectId: "chatapp-2b04c",
-storageBucket: "chatapp-2b04c.appspot.com",
-messagingSenderId: "73396890967"
+    apiKey: "AIzaSyCqddWFL4sa69b60Apac8S1_p3vvAmh2eE",
+    authDomain: "chatapp-2b04c.firebaseapp.com",
+    databaseURL: "https://chatapp-2b04c.firebaseio.com",
+    projectId: "chatapp-2b04c",
+    storageBucket: "chatapp-2b04c.appspot.com",
+    messagingSenderId: "73396890967"
 };
 firebase.initializeApp(config);
 
@@ -34,10 +34,14 @@ class ChatApp extends React.Component{
     handleAddName=(event)=>{
         event.preventDefault();
         const enter = document.querySelector(".enterName")
+        const inputs = document.querySelectorAll("input");
+        console.log(inputs);
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].style.display = "block";
+        }
         enter.style.display = "none";
         enter.nextElementSibling.style.display = "block";
-        console.log("user name to: ", this.state.userName);
-        const name = this.state.userName
+        const name = this.state.userName;
     }
     componentDidMount(){
         firebase.database().ref("messages/").on("value", (snapshot)=>{
@@ -46,6 +50,8 @@ class ChatApp extends React.Component{
                 this.setState({
                     messages: currentMessages
                 })
+                console.log(this.state.messages.id);
+
             }
         })
     }
@@ -62,7 +68,7 @@ class ChatApp extends React.Component{
             userName: this.state.userName,
         }
         firebase.database().ref("messages/"+newMessage.id).set(newMessage)
-        scrollWin(0, 50);
+        console.log(this);
         this.setState({
             chatInput:"",
         })
@@ -75,17 +81,28 @@ class ChatApp extends React.Component{
         //     });
     }
         render(){
-            const chat = this.state.messages.map((message, i) => {
-                return (<li key={message.id} >{message.userName} said:<p className="bubble">{message.text}</p>
+            // const time = () =>{
+            //
+            // }
+            const time = new Date();
+            const minutes = time.getMinutes();
+            const hours = time.getHours();
+            const month = time.getMonth();
+            const day = time.getDate();
 
+
+            const chat = this.state.messages.map((message, i) => {
+                return (<li key={message.id} >
+                    <p className="name" className={message.userName == this.state.userName ? "left" : "right"}>{message.userName}</p>
+                    <p className={message.userName == this.state.userName ? "bubble" : "bubbleRight"}>{message.text}</p>
                 </li>)
             });
             return (
             <div className="chat">
                 <div className="enterName">
                     <form onSubmit={this.handleAddName}>
-                        <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.." required />
-                        <input type="submit"/>
+                        <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.." required autoFocus />
+                        <input type="submit" value="Submit" />
                     </form>
                 </div>
                 <div className="messages">
