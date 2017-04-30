@@ -1,120 +1,15 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import {render} from 'react-dom';
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import ChatApp from "./ChatApp.jsx";
 import Header from "./Header.jsx";
+import EnterName from "./EnterName.jsx";
+import SortableComponent from "./SortableComponent.jsx";
 
 
 
 
-class SortableComponent extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          items: this.props.items,
-          inputText: "",
-          descriptionText:"",
-        };
-    }
-  onSortEnd = ({oldIndex, newIndex}) => {
-    this.setState({
-      items: arrayMove(this.state.items, oldIndex, newIndex),
-    });
-  }
-  handleAddTask=(event)=>{
-      event.preventDefault();
-      const items = this.state.items.slice();
-      items.push(this.state.inputText);
-      this.setState({
-          items: items,
-          inputText: "",
-      });
-      if (typeof this.props.onAdd === "function") {
-          this.props.onAdd(items, this.props.status);
-      }
-  }
-  handleEditTask=(event)=>{
-      this.setState({
-          inputText: event.target.value,
-      });
-  }
-  handleEditDescription=(event)=>{
-      console.log("dziala");
-      this.setState({
-          descriptionText: event.target.value,
-      });
-  }
-  handleChangeColor=(event)=>{
-      console.log(event.currentTarget.style.color);
-      event.currentTarget.style.color == "yellow" ? event.currentTarget.style.color = "lightgrey" : event.currentTarget.style.color = "yellow"
-  }
-  handleRemoveTask=(e)=>{
-      const items = this.state.items.slice();
-      const element = items.indexOf(e.currentTarget.value);
-      items.splice(element, 1)
-      this.setState({
-          items: items,
-      });
-  }
-  handleMoveItem=(e)=>{
-    const element = e.currentTarget.value;
-    if (typeof this.props.onMove === "function") {
-        this.props.onMove(element, this.props.status);
-    }
-  }
-  componentWillReceiveProps(nextProps){
-      this.setState({
-          items: nextProps.items,
-          })
-  }
-  render() {
-      const DragHandle = SortableHandle(() =>
-          <p className="dragLine">&#8691;</p>
-      );
-      const SortableItem = SortableElement(({value, index}) =>{
-        console.log(this.state, "sortable");
-        return (<li className="boardText">
-        <a onClick={this.handleChangeColor.bind(this)}
-        style={{color: "lightgrey"}}>
-        &#9733;</a>
-        <button onClick={this.handleRemoveTask}
-        value={value}>
-            {this.props.remove}
-        </button>
-        <button value={value} onClick={this.handleMoveItem}>{this.props.action2}</button>
-        <h2>{value}</h2>
-            <DragHandle />
-        </li>)
-    });
 
-
-      const SortableList = SortableContainer(({items}) => {
-        return (
-          <ul className="contentColumn">
-            {items.map((value, index) => {
-            return (<SortableItem key={`item-${index}`}
-              index={index}
-              value={value}/>
-          )})}
-          </ul>
-        );
-    });
-    return <div>
-    <div className="columns">
-        <h1>{this.props.status}<span>({this.state.items.length} tasks left)</span></h1>
-        <SortableList items={this.state.items} onSortEnd={this.onSortEnd}
-        useDragHandle={true} helperClass="SortableHelper"/>
-    </div>
-        <form onSubmit={this.handleAddTask}>
-            <input type="text"
-            name="newTask"
-            placeholder="New task..."
-            value={this.state.inputText} onChange={this.handleEditTask}/>
-        </form>
-    </div>
-  }
-}
 
 // class ChatApp extends React.Component{
 //     constructor(props){
@@ -185,6 +80,35 @@ class App extends React.Component{
             done: [],
         }
     }
+    componentDidMount(){
+        firebase.database().ref("TodoApp/").on("value", (snapshot)=>{
+        const currentMessages = snapshot.val()
+        console.log("ladowanie", currentMessages.toDo);
+            if (currentMessages.toDo != null) {
+                console.log("todo");
+                this.setState({
+                    toDo: currentMessages.toDo,
+                })
+            }if (currentMessages.doing != null) {
+                this.setState({
+                    doing: currentMessages.doing,
+                })
+            }if (currentMessages.done != null) {
+                this.setState({
+                    done: currentMessages.done,
+                })
+            }
+        })
+    }
+    handleSaveTodo=(event)=>{
+        console.log(this.state);
+        // let newMessage = {
+        //     toDo: this.state.toDo,
+        //     doing: this.state.doing,
+        //     done: this.state.done,
+        // }
+        firebase.database().ref("TodoApp/").set(this.state)
+    }
     handleAddNewTask=(array, taskList)=>{
         let curr = "";
         if (taskList === "ToDo") {
@@ -192,7 +116,7 @@ class App extends React.Component{
         } else if(taskList === "Doing"){
             curr = "doing";
         }else if (taskList === "Done") {
-            console.log("done");
+            curr = "done";
         }
         this.setState({
             [`${curr}`]: array,
@@ -215,6 +139,9 @@ class App extends React.Component{
             next = "done";
 
         }else if (taskList === "Done") {
+            this.setState({
+                done: [],
+            })
         }
         tab1 = tab1.filter(item => {
             return item !== element;
@@ -225,17 +152,25 @@ class App extends React.Component{
             [`${curr}`]: tab1,
             [`${next}`]: tab2,
         });
-        console.log(this.state, "czy state sie updatuje");
+    }
+    handleNewName=(username)=>{
+        console.log("działa", username);
+        this.setState({
+            userName: username,
+        })
     }
     render(){
         return <div>
         <Header/>
         <div className="container">
-            <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing"/>
-            <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done"/>
-            <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" action2="Clear"/>
-            <ChatApp/>
+            <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName}/>
+            <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done" userName={this.state.userName}/>
+            <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" userName={this.state.userName}/>
+            <ChatApp userName={this.state.userName}/>
         </div>
+        <input type="submit" value="Save"
+        onClick={this.handleSaveTodo}/>
+        <EnterName newName={this.handleNewName}/>
     </div>
     }
 }

@@ -23,25 +23,8 @@ class ChatApp extends React.Component{
         this.state={
             messages: [],
             chatInput: "",
-            userName: "",
+            changeLog:[],
         }
-    }
-    handleChangeName=(event)=>{
-        this.setState({
-            userName: event.target.value,
-        })
-    }
-    handleAddName=(event)=>{
-        event.preventDefault();
-        const enter = document.querySelector(".enterName")
-        const inputs = document.querySelectorAll("input");
-        console.log(inputs);
-        for (var i = 0; i < inputs.length; i++) {
-            inputs[i].style.display = "block";
-        }
-        enter.style.display = "none";
-        enter.nextElementSibling.style.display = "block";
-        const name = this.state.userName;
     }
     componentDidMount(){
         firebase.database().ref("messages/").on("value", (snapshot)=>{
@@ -50,8 +33,6 @@ class ChatApp extends React.Component{
                 this.setState({
                     messages: currentMessages
                 })
-                console.log(this.state.messages.id);
-
             }
         })
     }
@@ -65,20 +46,13 @@ class ChatApp extends React.Component{
         const newMessage = {
             id: this.state.messages.length,
             text: this.state.chatInput,
-            userName: this.state.userName,
+            userName: this.props.userName,
         }
         firebase.database().ref("messages/"+newMessage.id).set(newMessage)
-        console.log(this);
+
         this.setState({
             chatInput:"",
         })
-        // const messages = this.state.messages.slice();
-        // messages.push(newMessage);
-        // console.log(messages);
-        //     this.setState({
-        //     chatInput: "",
-        //     messages: messages,
-        //     });
     }
         render(){
             // const time = () =>{
@@ -93,18 +67,12 @@ class ChatApp extends React.Component{
 
             const chat = this.state.messages.map((message, i) => {
                 return (<li key={message.id} >
-                    <p className="name" className={message.userName == this.state.userName ? "left" : "right"}>{message.userName}</p>
-                    <p className={message.userName == this.state.userName ? "bubble" : "bubbleRight"}>{message.text}</p>
+                    <p className="name" className={message.userName == this.props.userName ? "left" : "right"}>{message.userName}</p>
+                    <p className={message.userName == this.props.userName ? "bubble" : "bubbleRight"}>{message.text}</p>
+                    <p>{this.state.changeLog[i]}</p>
                 </li>)
             });
-            return (
-            <div className="chat">
-                <div className="enterName">
-                    <form onSubmit={this.handleAddName}>
-                        <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.." required autoFocus />
-                        <input type="submit" value="Submit" />
-                    </form>
-                </div>
+            return ( <div className="chat">
                 <div className="messages">
                     <p> SAY SOMETHING.</p>
                     <ul>
