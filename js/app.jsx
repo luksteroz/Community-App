@@ -8,9 +8,6 @@ import SortableComponent from "./SortableComponent.jsx";
 
 
 
-
-
-
 // class ChatApp extends React.Component{
 //     constructor(props){
 //         super(props);
