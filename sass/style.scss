@@ -110,14 +110,13 @@ body{
                     display: none;
                 }
                 .messages{
-                    display: none;
-                    height: $heightColumn;
+                    display:none;
+                    height: 100%;
                     width: 100%;
-                    overflow: scroll;
                     overflow: auto;
                     color: white;
                     @media (max-width: $breakPointTablet) {
-                        height: 20vh;
+                        height: 22vh;
                     }
                     p{
                         width: 100%;
@@ -264,12 +263,12 @@ body{
                 text-align: right;
             }
             .contentColumn{
-                height: 100%;
+                height: 95%;
                 width: $widthColumn;
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                overflow: auto;
+                overflow: scroll;
                 width: 100%;
                 @media (max-width: $breakPointTablet) {
                 width: 100%;
@@ -278,7 +277,7 @@ body{
 
                 }
                 .boardText{
-                    background-color: white;
+                    background-color: rgba(255,255,255,1);
                     opacity:1;
                     border-radius: 10px 10px 10px 10px;
                     @media (max-width: $breakPointTablet) {

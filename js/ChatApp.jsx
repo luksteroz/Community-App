@@ -35,6 +35,13 @@ class ChatApp extends React.Component{
                 })
             }
         })
+        const messages = document.querySelector(".messages");
+        this.timerId = setInterval(()=>{
+            messages.scrollTop = messages.scrollHeight ;
+        }, 800);
+    }
+    componentWillUnmount(){
+        clearInterval(this.timerId);
     }
     handleUpdateMessage=(event)=>{
         this.setState({
@@ -49,21 +56,21 @@ class ChatApp extends React.Component{
             userName: this.props.userName,
         }
         firebase.database().ref("messages/"+newMessage.id).set(newMessage)
-
         this.setState({
             chatInput:"",
         })
+
     }
         render(){
             // const time = () =>{
             //
             // }
+
             const time = new Date();
             const minutes = time.getMinutes();
             const hours = time.getHours();
             const month = time.getMonth();
             const day = time.getDate();
-
 
             const chat = this.state.messages.map((message, i) => {
                 return (<li key={message.id} >

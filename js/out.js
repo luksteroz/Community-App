@@ -11529,7 +11529,6 @@ var ChatApp = function (_React$Component) {
                 userName: _this.props.userName
             };
             firebase.database().ref("messages/" + newMessage.id).set(newMessage);
-
             _this.setState({
                 chatInput: ""
             });
@@ -11556,6 +11555,15 @@ var ChatApp = function (_React$Component) {
                     });
                 }
             });
+            var messages = document.querySelector(".messages");
+            this.timerId = setInterval(function () {
+                messages.scrollTop = messages.scrollHeight;
+            }, 800);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearInterval(this.timerId);
         }
     }, {
         key: 'render',
@@ -11565,6 +11573,7 @@ var ChatApp = function (_React$Component) {
             // const time = () =>{
             //
             // }
+
             var time = new Date();
             var minutes = time.getMinutes();
             var hours = time.getHours();
