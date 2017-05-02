@@ -273,11 +273,11 @@ body{
                 @media (max-width: $breakPointTablet) {
                 width: 100%;
                 height: 100%;
-                opacity:1;
-
                 }
                 .boardText{
-                    background-color: rgba(255,255,255,1);
+                    // background-color: rgba(255,255,255,1);
+                    margin: 5px 5px;
+                    background-color: rgba(66, 184, 221, 0.8);
                     opacity:1;
                     border-radius: 10px 10px 10px 10px;
                     @media (max-width: $breakPointTablet) {
@@ -286,6 +286,7 @@ body{
                     }
                     h2{
                         text-align: center;
+                        color: white;
                     }
                     p {
                         height:80px;
@@ -294,13 +295,16 @@ body{
                     button{
                         display:block;
                         font-size: 20px;
-                        background-color: grey;
+                        font-weight: bold;
                         border: 1px solid white;
-                        color: white;
-                        border-radius: 5px;
                         float: right;
                         margin: 5px 5px;
                         width: 80px;
+                        margin-top: 10px;
+                        color: white;
+                        border-radius: 4px;
+                        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                        background: rgb(66, 184, 221);
                         @media (max-width: $breakPointTablet) {
                         font-size: 10px;
                         }
@@ -319,8 +323,7 @@ body{
                         width: 100%;
                         height: 30px;
                         line-height: 20px;
-                        background-color: lightgrey;
-                        opacity: 1;
+                        background-color: rgba(216, 56, 255, 0.6);
                         text-align: center;
                         font-size: 25px;
                         line-height: 30px;
