@@ -6,7 +6,7 @@ class Description extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            descipription: "";
+            descipription: this.props.descipription;
         }
     }
     handleChangeDescription=(event)=>{

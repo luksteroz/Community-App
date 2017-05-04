@@ -76,7 +76,6 @@ class ChatApp extends React.Component{
                 return (<li key={message.id} >
                     <p className="name" className={message.userName == this.props.userName ? "left" : "right"}>{message.userName}</p>
                     <p className={message.userName == this.props.userName ? "bubble" : "bubbleRight"}>{message.text}</p>
-                    <p>{this.state.changeLog[i]}</p>
                 </li>)
             });
             return ( <div className="chat">

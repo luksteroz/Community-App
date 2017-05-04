@@ -11593,11 +11593,6 @@ var ChatApp = function (_React$Component) {
                         'p',
                         { className: message.userName == _this3.props.userName ? "bubble" : "bubbleRight" },
                         message.text
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        _this3.state.changeLog[i]
                     )
                 );
             });
@@ -11767,7 +11762,14 @@ var Header = function (_React$Component) {
             return _react2.default.createElement(
                 'header',
                 null,
-                _react2.default.createElement('div', { id: 'logo' })
+                _react2.default.createElement('div', { id: 'logo' }),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    'COMMUNITY',
+                    _react2.default.createElement('br', null),
+                    'WINDOW'
+                )
             );
         }
     }]);
@@ -11827,15 +11829,27 @@ var SortableComponent = function (_React$Component) {
 
         _this.handleAddTask = function (event) {
             event.preventDefault();
-            var items = _this.state.items.slice();
-            items.push(_this.state.inputText);
+            //   const items = this.state.items.slice();
+            //   items.push(this.state.inputText);
+            //   console.log("nowa tablica to",items);
+            //   this.setState({
+            //       items: items,
+            //       inputText: "",
+            //   });
+            var currentTask = {
+                id: _this.state.items.length,
+                task: _this.state.inputText,
+                description: "description"
+            };
+            //   const status = this.props.status;
+            //   console.log(status);
+            firebase.database().ref(_this.props.status + "/" + currentTask.id).set(currentTask);
             _this.setState({
-                items: items,
                 inputText: ""
             });
-            if (typeof _this.props.onAdd === "function") {
-                _this.props.onAdd(items, _this.props.status);
-            }
+            //   if (typeof this.props.onAdd === "function") {
+            //       this.props.onAdd(items, this.props.status);
+            //   }
         };
 
         _this.handleEditTask = function (event) {
@@ -11845,7 +11859,7 @@ var SortableComponent = function (_React$Component) {
         };
 
         _this.handleEditDescription = function (event) {
-            console.log("dziala");
+            console.log(event.target.value);
             _this.setState({
                 descriptionText: event.target.value
             });
@@ -11857,26 +11871,43 @@ var SortableComponent = function (_React$Component) {
         };
 
         _this.handleRemoveTask = function (e) {
-            var items = _this.state.items.slice();
-            var element = items.indexOf(e.currentTarget.value);
-            items.splice(element, 1);
+
+            firebase.database().ref(_this.props.status + "/").remove();
+            var items = _this.state.items.map(function (value, index) {
+                return { id: index, task: value.task };
+            });
+            var element = items.splice(e.currentTarget.value, 1);
+            firebase.database().ref(_this.props.status + "/").set(items);
             _this.setState({
                 items: items
             });
-            if (typeof _this.props.onAdd === "function") {
-                _this.props.onAdd(items, _this.props.status);
-            }
+            return element;
+
+            //   if (typeof this.props.onAdd === "function") {
+            //       this.props.onAdd(items, this.props.status);
+            //   }
         };
 
         _this.handleMoveItem = function (e) {
-            var element = e.currentTarget.value;
-            if (typeof _this.props.onMove === "function") {
-                _this.props.onMove(element, _this.props.status);
-            }
+            event.preventDefault();
+            console.log(e.currentTarget.name, e.currentTarget.value);
+
+            //   this.handleRemoveTask(e);
+            var items = _this.state.items.slice();
+            items.push(_this.handleRemoveTask(e));
+            // this.setState({
+            //     items: items,
+            // });
+            firebase.database().ref(e.currentTarget.name + "/").set(items);
+
+            // const element = e.currentTarget.value;
+            // if (typeof this.props.onMove === "function") {
+            //     this.props.onMove(element, this.props.status);
+            // }
         };
 
         _this.state = {
-            items: _this.props.items,
+            items: [],
             inputText: "",
             descriptionText: "",
             userName: ""
@@ -11885,16 +11916,40 @@ var SortableComponent = function (_React$Component) {
     }
 
     _createClass(SortableComponent, [{
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            this.setState({
-                items: nextProps.items
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            firebase.database().ref(this.props.status + "/").on("value", function (snapshot) {
+                var allTasks = snapshot.val();
+                if (allTasks != null) {
+                    _this2.setState({
+                        items: allTasks
+                    });
+                }
             });
         }
+        // componentDidUpdate(){
+        //     firebase.database().ref(this.props.status+"/").on("value", (snapshot)=>{
+        //     const update = snapshot.val()
+        //         if (update != null) {
+        //             this.setState({
+        //                 items: update,
+        //             })
+        //         }
+        //     })
+        // }
+
     }, {
         key: 'render',
+
+        // componentWillReceiveProps(nextProps){
+        //     this.setState({
+        //         items: nextProps.items,
+        //         })
+        // }
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
                 return _react2.default.createElement(
@@ -11907,30 +11962,36 @@ var SortableComponent = function (_React$Component) {
                 var value = _ref2.value,
                     index = _ref2.index;
 
+                console.log("value w sortowni", value);
                 return _react2.default.createElement(
                     'li',
                     { className: 'boardText' },
                     _react2.default.createElement(
                         'a',
-                        { onClick: _this2.handleChangeColor.bind(_this2),
+                        { onClick: _this3.handleChangeColor.bind(_this3),
                             style: { color: "lightgrey" } },
                         '\u2605'
                     ),
                     _react2.default.createElement(
                         'button',
-                        { onClick: _this2.handleRemoveTask,
-                            value: value },
-                        _this2.props.remove
+                        { onClick: _this3.handleRemoveTask,
+                            value: value.id },
+                        _this3.props.remove
                     ),
                     _react2.default.createElement(
                         'button',
-                        { value: value, onClick: _this2.handleMoveItem },
-                        _this2.props.action2
+                        { className: 'move',
+                            value: value.id,
+                            name: _this3.props.action2,
+                            onClick: _this3.handleMoveItem },
+                        _this3.props.action2
                     ),
+                    _react2.default.createElement('input', { type: 'text',
+                        onChange: _this3.handleEditDescription }),
                     _react2.default.createElement(
                         'h2',
                         null,
-                        value
+                        value.task
                     ),
                     _react2.default.createElement(DragHandle, null)
                 );
@@ -11939,10 +12000,12 @@ var SortableComponent = function (_React$Component) {
             var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref3) {
                 var items = _ref3.items;
 
+                console.log("sortowany", items.task);
                 return _react2.default.createElement(
                     'ul',
                     { className: 'contentColumn' },
                     items.map(function (value, index) {
+                        console.log("value", value);
                         return _react2.default.createElement(SortableItem, { key: 'item-' + index,
                             index: index,
                             value: value });
@@ -11976,7 +12039,8 @@ var SortableComponent = function (_React$Component) {
                     _react2.default.createElement('input', { type: 'text',
                         name: 'newTask',
                         placeholder: 'New task...',
-                        value: this.state.inputText, onChange: this.handleEditTask })
+                        value: this.state.inputText,
+                        onChange: this.handleEditTask })
                 )
             );
         }
@@ -12022,74 +12086,12 @@ var _SortableComponent2 = _interopRequireDefault(_SortableComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// class ChatApp extends React.Component{
-//     constructor(props){
-//         super(props);
-//         this.state={
-//             messages: [],
-//             chatInput: "",
-//             userName: "",
-//         }
-//     }
-//     handleChangeName=(event)=>{
-//         this.setState({
-//             userName: event.target.value,
-//         })
-//     }
-//     handleAddName=(event)=>{
-//         event.preventDefault();
-//         console.log(this.state.userName.);
-//         const name = this.state.userName
-//     }
-//     handleChangeText=(event)=>{
-//         this.setState({
-//             chatInput: event.target.value,
-//         })
-//     }
-//     handleSubmitMessage=(event)=> {
-//         event.preventDefault();
-//         const messages = this.state.messages.slice();
-//         messages.push(this.state.chatInput);
-//             this.setState({
-//             chatInput: "",
-//             messages: messages,
-//             });
-//       }
-//         render(){
-//             const chat = this.state.messages.map((value, index) => (
-//                 <li key={index}>
-//                     {value}
-//                 </li>
-//             ));
-//             return ( <div className="chat">
-//             <p> SAY SOMETHING.</p>
-//             <div className="messages">
-//                 <ul>
-//                     {chat}
-//                 </ul>
-//             </div>
-//             <form onSubmit={this.handleSubmitMessage}>
-//                 <input type="text"
-//                     name="chatInput"
-//                     onChange={this.handleChangeText}
-//                     value={this.state.chatInput}
-//                     placeholder="Write a message..." />
-//           </form>
-//             <form onSubmit={this.handleAddName}>
-//                 <input type="text" value={this.state.userName} onChange={this.handleChangeName} placeholder="Your name.."/>
-//                 <input type="submit"/>
-//             </form>
-//           </div>);
-//         }
-//     }
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -12098,60 +12100,7 @@ var App = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this.handleSaveTodo = function (event) {
-            console.log(_this.state);
-            // let newMessage = {
-            //     toDo: this.state.toDo,
-            //     doing: this.state.doing,
-            //     done: this.state.done,
-            // }
-            firebase.database().ref("TodoApp/").set(_this.state);
-        };
-
-        _this.handleAddNewTask = function (array, taskList) {
-            var curr = "";
-            if (taskList === "ToDo") {
-                curr = "toDo";
-            } else if (taskList === "Doing") {
-                curr = "doing";
-            } else if (taskList === "Done") {
-                curr = "done";
-            }
-            _this.setState(_defineProperty({}, '' + curr, array));
-        };
-
-        _this.handleOnMove = function (element, taskList) {
-            var _this$setState2;
-
-            var tab1 = [];
-            var tab2 = [];
-            var curr = "";
-            var next = "";
-            if (taskList === "ToDo") {
-                tab1 = _this.state.toDo.slice();
-                tab2 = _this.state.doing.slice();
-                curr = "toDo";
-                next = "doing";
-            } else if (taskList === "Doing") {
-                tab1 = _this.state.doing.slice();
-                tab2 = _this.state.done.slice();
-                curr = "doing";
-                next = "done";
-            } else if (taskList === "Done") {
-                _this.setState({
-                    done: []
-                });
-            }
-            tab1 = tab1.filter(function (item) {
-                return item !== element;
-            });
-
-            tab2.push(element);
-            _this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, '' + curr, tab1), _defineProperty(_this$setState2, '' + next, tab2), _this$setState2));
-        };
-
         _this.handleNewName = function (username) {
-            console.log("działa", username);
             _this.setState({
                 userName: username
             });
@@ -12164,32 +12113,76 @@ var App = function (_React$Component) {
         };
         return _this;
     }
+    // componentDidMount(){
+    //     firebase.database().ref("TodoApp/").on("value", (snapshot)=>{
+    //     const currentMessages = snapshot.val()
+    //     console.log("ladowanie", currentMessages.toDo);
+    //         if (currentMessages.toDo != null) {
+    //             console.log("todo");
+    //             this.setState({
+    //                 toDo: currentMessages.toDo,
+    //             })
+    //         }if (currentMessages.doing != null) {
+    //             this.setState({
+    //                 doing: currentMessages.doing,
+    //             })
+    //         }if (currentMessages.done != null) {
+    //             this.setState({
+    //                 done: currentMessages.done,
+    //             })
+    //         }
+    //     })
+    // }
+    // handleSaveTodo=(event)=>{
+    //     firebase.database().ref("TodoApp/").set(this.state)
+    // }
+    // handleAddNewTask=(array, taskList)=>{
+    //     console.log(array);
+    //     let curr = "";
+    //     if (taskList === "ToDo") {
+    //         curr = "toDo";
+    //     } else if(taskList === "Doing"){
+    //         curr = "doing";
+    //     }else if (taskList === "Done") {
+    //         curr = "done";
+    //     }
+    //     this.setState({
+    //         [`${curr}`]: array,
+    //     })
+    // }
+    // handleOnMove=(element, taskList)=>{
+    //     let tab1 = [];
+    //     let tab2 = [];
+    //     let curr = "";
+    //     let next = "";
+    //     if (taskList === "ToDo") {
+    //         tab1 = this.state.toDo.slice();
+    //         tab2 = this.state.doing.slice();
+    //         curr = "toDo";
+    //         next = "doing";
+    //     } else if(taskList === "Doing"){
+    //         tab1 = this.state.doing.slice();
+    //         tab2 = this.state.done.slice();
+    //         curr = "doing";
+    //         next = "done";
+    //
+    //     }else if (taskList === "Done") {
+    //         this.setState({
+    //             done: [],
+    //         })
+    //     }
+    //     tab1 = tab1.filter(item => {
+    //         return item !== element;
+    //     });
+    //     tab2.push(element);
+    //     this.setState({
+    //         [`${curr}`]: tab1,
+    //         [`${next}`]: tab2,
+    //     });
+    // }
+
 
     _createClass(App, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            firebase.database().ref("TodoApp/").on("value", function (snapshot) {
-                var currentMessages = snapshot.val();
-                console.log("ladowanie", currentMessages.toDo);
-                if (currentMessages.toDo != null) {
-                    console.log("todo");
-                    _this2.setState({
-                        toDo: currentMessages.toDo
-                    });
-                }if (currentMessages.doing != null) {
-                    _this2.setState({
-                        doing: currentMessages.doing
-                    });
-                }if (currentMessages.done != null) {
-                    _this2.setState({
-                        done: currentMessages.done
-                    });
-                }
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(

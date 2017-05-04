@@ -7,6 +7,8 @@ $breakPointTablet: 750px;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    list-style: none;
+
 }
 body{
     overflow-y: hidden;
@@ -59,24 +61,31 @@ body{
             }
         }
         header{
+            display: inline-block;
+
             cursor: pointer;
             background-color: rgba(216,56,255,0.8);
             width: 100%;
             height: 6vh;
             text-align: center;
+            margin: 0 auto;
             @media (min-width: $breakPointTablet) {
                 height: 100px;
             }
             #logo{
+                display: inline-block;
                 margin: auto;
-                height: 100px;
-                width: 280px;
-                background-image: url(../images/comunnity.png);
+                height: 80px;
+                width: 80px;
+                background-image: url(../images/comunnityLogo.png);
                 background-size: 100% 100%;
                 @media (min-width: $breakPointTablet) {
-                    font-size: 50px;
                     line-height: 15vh;
                 }
+            }
+            span{
+                font-size: 20px;
+                color: white;
             }
         }
         .container{
@@ -86,12 +95,14 @@ body{
             margin-bottom: $marginTopColumn;
             @media (min-width: $breakPointTablet) {
                 flex-direction: row;
-
             }
             div:nth-child(3) {
                 display: none;
                 @media (min-width: 1100px) {
                     display:block;
+                }
+                .move{
+                        display:none;
                 }
             }
             .chat{
@@ -133,33 +144,38 @@ body{
                         font-size: 20px;
                         display: block;
                         float: left;
+                        @media (max-width: $breakPointTablet) {
+                            font-size: 10px;
+                        }
                     }
                     .right{
                         text-align: right;
-                        margin-right: 10px;
                         font-size: 20px;
                         float: right;
                         margin-right: 2vw;
+                        @media (max-width: $breakPointTablet) {
+                            font-size: 10px;
+                        }
                     }
                     .bubble{
+                        text-align: center;
                         float: left;
                         font-size: 20px;
                         position: relative;
-                        text-align: left;
                         margin-left: 20px;
                         color: blue;
                         max-width: 60%;
                         min-width: 50px;
                         padding: 0px;
-                        background: #FFFFFF;
+                        background: RGBa(1, 189, 180, 0.8);
                         -webkit-border-radius: 14px;
                         -moz-border-radius: 14px;
                         border-radius: 10px;
-                        border: #7F7F7F solid 2px;
-                        // @media (max-width: $breakPointTablet) {
-                        //     height: 20px;
-                        //     font-size: 18px;
-                        // }
+                        border:  2px solid RGB(38,255,2);
+                        @media (max-width: $breakPointTablet) {
+                            height: 20px;
+                            font-size: 14px;
+                        }
                     }
                     .bubble:after{
                         content: '';
@@ -172,6 +188,9 @@ body{
                         z-index: 1;
                         top: -15px;
                         left: 16px;
+                        @media (max-width: $breakPointTablet) {
+                            display: none;
+                        }
                     }
                     .bubble:before{
                         content: '';
@@ -184,6 +203,9 @@ body{
                         z-index: 0;
                         top: -18px;
                         left: 15px;
+                        @media (max-width: $breakPointTablet) {
+                            display: none;
+                        }
                     }
                     .bubbleRight{
                         float: right;
@@ -209,9 +231,11 @@ body{
                         width: 0;
                         z-index: 1;
                         top: -15px;
-                        left: 207px;
+                        left: 200px;
                         clear: both;
-
+                        @media (max-width: $breakPointTablet) {
+                            display: none;
+                        }
                     }
                     .bubbleRight:before{
                         content:"";
@@ -265,7 +289,6 @@ body{
             .contentColumn{
                 height: 95%;
                 width: $widthColumn;
-                list-style: none;
                 padding: 0;
                 margin: 0;
                 overflow: scroll;
@@ -282,18 +305,21 @@ body{
                     border-radius: 10px 10px 10px 10px;
                     @media (max-width: $breakPointTablet) {
                     width: 98%;
-                    height: 80px;
+                    max-height: 80px;
                     }
                     h2{
                         text-align: center;
                         color: white;
+                        @media (max-width: $breakPointTablet) {
+                            font-size: 12px;
+                        }
                     }
                     p {
                         height:80px;
                         width: $widthColumn;
+
                     }
                     button{
-                        display:block;
                         font-size: 20px;
                         font-weight: bold;
                         border: 1px solid white;
@@ -309,6 +335,11 @@ body{
                         font-size: 10px;
                         }
                     }
+                    input{
+                        display:block;
+                        width: 100%;
+                        height: 20px;
+                    }
                     a{
                         text-align: left;
                         font-size: 30px;
@@ -318,6 +349,7 @@ body{
                         }
                     }
                     p{
+                        border-radius: 4px;
                         margin-top: 60px;
                         cursor: pointer;
                         width: 100%;
@@ -328,7 +360,10 @@ body{
                         font-size: 25px;
                         line-height: 30px;
                         @media (max-width: $breakPointTablet) {
-                        margin:0;
+                            font-size: 16px;
+                            height: 16px;
+                            line-height:16px;
+                            margin: 0;
                         }
                     }
                 }
@@ -360,9 +395,10 @@ body{
     animation: scale-in-ver-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .SortableHelper {
+    border-radius: 6px;
+    background-color: inherit;
     box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2), 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
-    background-color: lightgrey;
-    opacity: 1;
+    opacity: 0.5;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
