@@ -94,6 +94,9 @@ class SortableComponent extends React.Component {
         this.props.onMove(element, this.props.status);
     }
   }
+    handleShowDescription=(e)=>{
+        e.currentTarget.nextElementSibling.style.display = "block";
+  }
   componentWillReceiveProps(nextProps){
       this.setState({
           items: nextProps.items,
@@ -121,7 +124,7 @@ class SortableComponent extends React.Component {
             <input type="submit"
             onClick={this.handleShowDescription}/>
             <Description newDescription={this.handleAddDescription}
-            id={value.id} description={value.description}/>
+            id={value.id} description={value}/>
             <h2>{value.task}</h2>
             <span> Added by {value.user}</span>
                 <DragHandle />

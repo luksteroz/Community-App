@@ -11905,6 +11905,10 @@ var SortableComponent = function (_React$Component) {
             }
         };
 
+        _this.handleShowDescription = function (e) {
+            e.currentTarget.nextElementSibling.style.display = "block";
+        };
+
         _this.state = {
             items: _this.props.items,
             inputText: "",
@@ -11972,7 +11976,7 @@ var SortableComponent = function (_React$Component) {
                     _react2.default.createElement('input', { type: 'submit',
                         onClick: _this2.handleShowDescription }),
                     _react2.default.createElement(_Description2.default, { newDescription: _this2.handleAddDescription,
-                        id: value.id, description: value.description }),
+                        id: value.id, description: value }),
                     _react2.default.createElement(
                         'h2',
                         null,
@@ -12087,14 +12091,19 @@ var Description = function (_React$Component) {
 
         _this.handleAddDescription = function (e) {
             e.preventDefault();
-            console.log(_this.props.id);
+            console.log(e.currentTarget.parentElement.parentElement);
+            e.currentTarget.parentElement.parentElement.style.display = "none";
             if (typeof _this.props.newDescription === "function") {
                 _this.props.newDescription(_this.state.description, _this.props.id);
             }
         };
 
+        _this.handleHideDescription = function (e) {
+            e.currentTarget.parentElement.parentElement.style.display = "none";
+        };
+
         _this.state = {
-            description: _this.props.description
+            description: _this.props.description.description
         };
         return _this;
     }
@@ -12109,17 +12118,22 @@ var Description = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log("propsy???", this.props.description);
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'descriptionBackground' },
                 _react2.default.createElement(
                     'form',
-                    { onSubmit: this.handleAddDescription },
+                    { className: 'description',
+                        onSubmit: this.handleAddDescription },
                     _react2.default.createElement('textarea', { type: 'text',
                         value: this.state.description,
                         onChange: this.handleChangeDescription }),
+                    _react2.default.createElement(
+                        'span',
+                        { onClick: this.handleHideDescription },
+                        'X'
+                    ),
                     _react2.default.createElement('input', { type: 'submit', value: 'zatwierd\u017A' })
                 )
             );
