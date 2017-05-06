@@ -6,24 +6,35 @@ class Description extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            descipription: this.props.descipription;
+            description: this.props.description,
         }
     }
-    handleChangeDescription=(event)=>{
+    componentWillReceiveProps(nextProps){
         this.setState({
-            descipription: event.target.value,
+            description: nextProps.description,
+            })
+    }
+    handleChangeDescription=(e)=>{
+        this.setState({
+            description: e.currentTarget.value,
         })
     }
-    handleAddDescription=(event)=>{
-
+    handleAddDescription=(e)=>{
+        e.preventDefault();
+        console.log(this.props.id);
+        if (typeof this.props.newDescription === "function") {
+            this.props.newDescription(this.state.description, this.props.id);
+        }
     }
     render(){
-        return <div className="descriptionDetail">
-            <form onSubmit{this.handleAddDescription}>
-                <input type="text"
+        console.log("propsy???",this.props.description);
+
+        return <div>
+            <form onSubmit={this.handleAddDescription}>
+                <textarea type="text"
                 value={this.state.description}
                 onChange={this.handleChangeDescription}/>
-                <input type="submit"/>
+                <input type="submit" value="zatwierdź"/>
             </form>
         </div>
     }

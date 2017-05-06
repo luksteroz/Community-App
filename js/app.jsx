@@ -16,74 +16,69 @@ class App extends React.Component{
             done: [],
         }
     }
-    // componentDidMount(){
-    //     firebase.database().ref("TodoApp/").on("value", (snapshot)=>{
-    //     const currentMessages = snapshot.val()
-    //     console.log("ladowanie", currentMessages.toDo);
-    //         if (currentMessages.toDo != null) {
-    //             console.log("todo");
-    //             this.setState({
-    //                 toDo: currentMessages.toDo,
-    //             })
-    //         }if (currentMessages.doing != null) {
-    //             this.setState({
-    //                 doing: currentMessages.doing,
-    //             })
-    //         }if (currentMessages.done != null) {
-    //             this.setState({
-    //                 done: currentMessages.done,
-    //             })
-    //         }
-    //     })
-    // }
-    // handleSaveTodo=(event)=>{
-    //     firebase.database().ref("TodoApp/").set(this.state)
-    // }
-    // handleAddNewTask=(array, taskList)=>{
-    //     console.log(array);
-    //     let curr = "";
-    //     if (taskList === "ToDo") {
-    //         curr = "toDo";
-    //     } else if(taskList === "Doing"){
-    //         curr = "doing";
-    //     }else if (taskList === "Done") {
-    //         curr = "done";
-    //     }
-    //     this.setState({
-    //         [`${curr}`]: array,
-    //     })
-    // }
-    // handleOnMove=(element, taskList)=>{
-    //     let tab1 = [];
-    //     let tab2 = [];
-    //     let curr = "";
-    //     let next = "";
-    //     if (taskList === "ToDo") {
-    //         tab1 = this.state.toDo.slice();
-    //         tab2 = this.state.doing.slice();
-    //         curr = "toDo";
-    //         next = "doing";
-    //     } else if(taskList === "Doing"){
-    //         tab1 = this.state.doing.slice();
-    //         tab2 = this.state.done.slice();
-    //         curr = "doing";
-    //         next = "done";
-    //
-    //     }else if (taskList === "Done") {
-    //         this.setState({
-    //             done: [],
-    //         })
-    //     }
-    //     tab1 = tab1.filter(item => {
-    //         return item !== element;
-    //     });
-    //     tab2.push(element);
-    //     this.setState({
-    //         [`${curr}`]: tab1,
-    //         [`${next}`]: tab2,
-    //     });
-    // }
+    componentDidMount(){
+        firebase.database().ref("TodoApp/").on("value", (snapshot)=>{
+        const currentMessages = snapshot.val()
+            if (currentMessages.toDo != null) {
+                console.log("todo");
+                this.setState({
+                    toDo: currentMessages.toDo,
+                })
+            }if (currentMessages.doing != null) {
+                this.setState({
+                    doing: currentMessages.doing,
+                })
+            }if (currentMessages.done != null) {
+                this.setState({
+                    done: currentMessages.done,
+                })
+            }
+        })
+    }
+    handleSaveTodo=(event)=>{
+        firebase.database().ref("TodoApp/").set(this.state)
+    }
+    handleAddNewTask=(array, taskList)=>{
+        console.log("array????????/",array);
+        let curr = "";
+        if (taskList === "ToDo") {
+            curr = "toDo";
+        } else if(taskList === "Doing"){
+            curr = "doing";
+        }else if (taskList === "Done") {
+            curr = "done";
+        }
+        const items = array.map((value, index)=>{
+            return {
+                    id: index,
+                    task: value.task,
+                    description: value.description,
+                    user: value.user,
+                    }
+        });
+        this.setState({
+            [`${curr}`]: items,
+        })
+    }
+
+    handleOnMove=(element, taskList)=>{
+        let tab = [];
+        let curr = "";
+        if (taskList === "ToDo") {
+            tab = this.state.doing.slice();
+            curr = "doing";
+        } else if(taskList === "Doing"){
+            tab = this.state.done.slice();
+            curr = "done";
+        }
+        tab.push(element);
+        this.setState({
+            [`${curr}`]: tab,
+        });
+        console.log("czy doszlo do doing",this.state);
+    }
     handleNewName=(username)=>{
+        console.log("nowy uzytkownik",username);
         this.setState({
             userName: username,
         })

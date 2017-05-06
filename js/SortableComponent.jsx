@@ -1,169 +1,152 @@
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
+import Description from './Description.jsx';
 
 
 class SortableComponent extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          items: [],
+          items: this.props.items,
           inputText: "",
-          descriptionText:"",
+          description:"",
           userName:"",
         };
     }
-    componentDidMount(){
-        firebase.database().ref(this.props.status+"/").on("value", (snapshot)=>{
-        const allTasks = snapshot.val()
-            if (allTasks != null) {
-                this.setState({
-                    items: allTasks,
-                })
-            }
-        })
-    }
-// componentDidUpdate(){
-//     firebase.database().ref(this.props.status+"/").on("value", (snapshot)=>{
-//     const update = snapshot.val()
-//         if (update != null) {
-//             this.setState({
-//                 items: update,
-//             })
-//         }
-//     })
-// }
   onSortEnd = ({oldIndex, newIndex}) => {
     this.setState({
       items: arrayMove(this.state.items, oldIndex, newIndex),
     });
   }
-  handleAddTask=(event)=>{
+  handleAddTask=(event, index)=>{
       event.preventDefault();
-    //   const items = this.state.items.slice();
-    //   items.push(this.state.inputText);
-    //   console.log("nowa tablica to",items);
-    //   this.setState({
-    //       items: items,
-    //       inputText: "",
-    //   });
-      const currentTask = {
+      console.log(event.currentTarget.index);
+      const items = this.state.items.slice();
+      const element = {
           id: this.state.items.length,
           task: this.state.inputText,
-          description: "description",
+          description: this.state.description,
+          user: this.props.userName,
       }
-    //   const status = this.props.status;
-    //   console.log(status);
-      firebase.database().ref(this.props.status+"/"+currentTask.id).set(currentTask)
+      items.push(element);
       this.setState({
+        //   items: items,
           inputText: "",
       });
-    //   if (typeof this.props.onAdd === "function") {
-    //       this.props.onAdd(items, this.props.status);
-    //   }
+      if (typeof this.props.onAdd === "function") {
+          this.props.onAdd(items, this.props.status);
+      }
   }
-  handleEditTask=(event)=>{
+  handleEditTask=(e)=>{
       this.setState({
-          inputText: event.target.value,
+          inputText: e.target.value,
       });
   }
-  handleEditDescription=(event)=>{
-      console.log(event.target.value);
-      this.setState({
-          descriptionText: event.target.value,
-      });
+  // handleEditDescription=(e)=>{
+  //     console.log("dziala");
+  //     this.setState({
+  //         descriptionText: e.target.value,
+  //     });
+  // }
+    handleAddDescription=(description, id)=>{
+
+        const items = this.state.items.slice();
+        console.log("co to jest items id",items[id]);
+        items[id] = {
+            id: items[id].id,
+            task: items[id].task,
+            description: description,
+            user: items[id].user,
+        }
+        if (typeof this.props.onAdd === "function") {
+            this.props.onAdd(items, this.props.status);
+        }
   }
-  handleChangeColor=(event)=>{
-      console.log(event.currentTarget.style.color);
-      event.currentTarget.style.color == "yellow" ? event.currentTarget.style.color = "lightgrey" : event.currentTarget.style.color = "yellow"
+  handleChangeColor=(e)=>{
+      console.log(e.currentTarget.style.color);
+      e.currentTarget.style.color == "yellow" ? e.currentTarget.style.color = "lightgrey" : e.currentTarget.style.color = "yellow"
   }
   handleRemoveTask=(e)=>{
-
-      firebase.database().ref(this.props.status+"/").remove()
-      const items = this.state.items.map((value, index) => {
-          return {id: index, task: value.task}
-      })
-      const element = items.splice(e.currentTarget.value, 1);
-      firebase.database().ref(this.props.status+"/").set(items)
+      const items = this.state.items.slice();
+      items.splice(e.currentTarget.value, 1)
       this.setState({
           items: items,
       });
-      return element
-
-
-    //   if (typeof this.props.onAdd === "function") {
-    //       this.props.onAdd(items, this.props.status);
-    //   }
+      if (typeof this.props.onAdd === "function") {
+          this.props.onAdd(items, this.props.status);
+      }
   }
-  handleMoveItem=(e)=>{
-    event.preventDefault();
-    console.log(e.currentTarget.name, e.currentTarget.value);
+    handleMoveItem=(e)=>{
+        const items = this.state.items.slice();
+        console.log("chce sam element", items[e.currentTarget.value]);
+        const element = items[e.currentTarget.value];
+        // console.log("co to element przed delete",e.currentTarget.value);
+        console.log("ELEMENT PRZEKAZANY DO MOVE",element);
+        // const items = this.state.items.slice();
+        // const element={
+        //     task:
+        // }
+        this.handleRemoveTask(e);
 
-    //   this.handleRemoveTask(e);
-    const items = this.state.items.slice()
-    items.push(this.handleRemoveTask(e));
-    // this.setState({
-    //     items: items,
-    // });
-    firebase.database().ref(e.currentTarget.name+"/").set(items)
-
-
-
-    // const element = e.currentTarget.value;
-    // if (typeof this.props.onMove === "function") {
-    //     this.props.onMove(element, this.props.status);
-    // }
+    if (typeof this.props.onMove === "function") {
+        this.props.onMove(element, this.props.status);
+    }
   }
-  // componentWillReceiveProps(nextProps){
-  //     this.setState({
-  //         items: nextProps.items,
-  //         })
-  // }
+  componentWillReceiveProps(nextProps){
+      this.setState({
+          items: nextProps.items,
+          })
+  }
   render() {
       const DragHandle = SortableHandle(() =>
           <p className="dragLine">&#8691;</p>
       );
       const SortableItem = SortableElement(({value, index}) =>{
-          console.log("value w sortowni", value);
+          console.log("co to value descript", value.description);
         return (<li className="boardText">
-        <a onClick={this.handleChangeColor.bind(this)}
-        style={{color: "lightgrey"}}>
-        &#9733;</a>
-        <button onClick={this.handleRemoveTask}
-        value={value.id}>
-            {this.props.remove}
-        </button>
-        <button  className="move"
-        value={value.id}
-        name={this.props.action2}
-        onClick={this.handleMoveItem}>{this.props.action2}</button>
-        <input type="text"
-        onChange={this.handleEditDescription}/>
-        <h2>{value.task}</h2>
-            <DragHandle />
+            <a onClick={this.handleChangeColor}
+            style={{color: "lightgrey"}}>
+            &#9733;</a>
+            <button
+            onClick={this.handleRemoveTask}
+            value={value.id}>
+                {this.props.remove}
+            </button>
+            <button
+            value={value.id}
+            onClick={this.handleMoveItem}
+            className="move">{this.props.action2}</button>
+            <input type="submit"
+            onClick={this.handleShowDescription}/>
+            <Description newDescription={this.handleAddDescription}
+            id={value.id} description={value.description}/>
+            <h2>{value.task}</h2>
+            <span> Added by {value.user}</span>
+                <DragHandle />
         </li>)
     });
 
 
       const SortableList = SortableContainer(({items}) => {
-          console.log("sortowany",items.task);
         return (
           <ul className="contentColumn">
             {items.map((value, index) => {
-                console.log("value", value);
             return (<SortableItem key={`item-${index}`}
               index={index}
               value={value}/>
-                )}
-            )}
+          )})}
           </ul>
         );
     });
     return <div>
     <div className="columns">
         <h1>{this.props.status}<span>({this.state.items.length} tasks left)</span></h1>
-        <SortableList items={this.state.items} onSortEnd={this.onSortEnd}
-        useDragHandle={true} helperClass="SortableHelper"/>
+        <SortableList items={this.state.items}
+        onSortEnd={this.onSortEnd}
+        useDragHandle={true}
+        helperClass="SortableHelper"/>
     </div>
         <form onSubmit={this.handleAddTask}>
             <input type="text"
