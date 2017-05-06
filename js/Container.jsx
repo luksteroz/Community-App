@@ -7,7 +7,7 @@ import EnterName from "./EnterName.jsx";
 import SortableComponent from "./SortableComponent.jsx";
 
 
-class App extends React.Component{
+class Container extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -98,6 +98,5 @@ class App extends React.Component{
     </div>
     }
 }
-ReactDOM.render(
-    <App/>,
-    document.getElementById('app'));
+
+export default Container

@@ -15,8 +15,6 @@ const config = {
 firebase.initializeApp(config);
 
 
-
-
 class ChatApp extends React.Component{
     constructor(props){
         super(props);
@@ -62,16 +60,6 @@ class ChatApp extends React.Component{
 
     }
         render(){
-            // const time = () =>{
-            //
-            // }
-
-            const time = new Date();
-            const minutes = time.getMinutes();
-            const hours = time.getHours();
-            const month = time.getMonth();
-            const day = time.getDate();
-
             const chat = this.state.messages.map((message, i) => {
                 return (<li key={message.id} >
                     <p className="name" className={message.userName == this.props.userName ? "left" : "right"}>{message.userName}</p>

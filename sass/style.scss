@@ -308,13 +308,13 @@ body{
                     }
                     .descriptionBackground{
                         display: none;
-                        position: fixed;
+                        position: absolute;
                         left:0;
                         top:0;
                         background-color: RGBa(0,0,0,0.8);
                         height: 100vh;
                         width: 100vw;
-
+                        z-index: 1;
                         .description{
                             position: fixed;
                             height: 40vh;
@@ -323,10 +323,11 @@ body{
                             margin-top: 30vh;
                             background: red;
                             text-align: right;
+                            z-index: 2;
                             span{
                                 font-size: 40px;
                                 position: relative;
-
+                                cursor: pointer;
                             }
                         }
                     }

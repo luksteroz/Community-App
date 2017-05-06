@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-
+import Container from './Container.jsx'
 
 
 class App extends React.Component{
@@ -8,7 +8,10 @@ class App extends React.Component{
         super(props);
     }
     render(){
-        return 
+        return <Container/>
     }
 
 }
+ReactDOM.render(
+    <App/>,
+    document.getElementById('app'));

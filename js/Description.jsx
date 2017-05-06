@@ -9,11 +9,6 @@ class Description extends React.Component{
             description: this.props.description.description,
         }
     }
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            description: nextProps.description,
-            })
-    }
     handleChangeDescription=(e)=>{
         this.setState({
             description: e.currentTarget.value,
@@ -31,7 +26,6 @@ class Description extends React.Component{
         e.currentTarget.parentElement.parentElement.style.display = "none";
     }
     render(){
-
         return <div className="descriptionBackground">
             <form className="description"
                 onSubmit={this.handleAddDescription}>

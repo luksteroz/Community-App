@@ -5,8 +5,8 @@ import React from 'react';
 class Header extends React.Component {
     render(){
         return <header>
-        <div id="logo"></div>
-        <span>COMMUNITY<br/>WINDOW</span>
+            <div id="logo"></div>
+            <span>COMMUNITY<br/>WINDOW</span>
         </header>
     }
 }
