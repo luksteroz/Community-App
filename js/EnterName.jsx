@@ -36,7 +36,6 @@ class EnterName extends React.Component {
                 placeholder="Enter Your name.."
                 required
                 autoFocus />
-                <input type="submit" value="Submit" />
             </form>
         </div>)
     }

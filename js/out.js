@@ -11614,7 +11614,9 @@ var Container = function (_React$Component) {
                     _react2.default.createElement(_SortableComponent2.default, { items: this.state.done, onMove: this.handleOnMove, onAdd: this.handleAddNewTask, status: 'Done', remove: 'Remove', userName: this.state.userName }),
                     _react2.default.createElement(_ChatApp2.default, { userName: this.state.userName })
                 ),
-                _react2.default.createElement('input', { type: 'submit', value: 'Save',
+                _react2.default.createElement('input', { className: 'save',
+                    type: 'submit',
+                    value: 'Save',
                     onClick: this.handleSaveTodo }),
                 _react2.default.createElement(_EnterName2.default, { newName: this.handleNewName })
             );
@@ -11903,14 +11905,25 @@ var Description = function (_React$Component) {
                     'form',
                     { className: 'description',
                         onSubmit: this.handleAddDescription },
-                    _react2.default.createElement('textarea', { type: 'text',
-                        value: this.state.description,
-                        onChange: this.handleChangeDescription }),
                     _react2.default.createElement(
-                        'span',
+                        'p',
                         { onClick: this.handleHideDescription },
                         'X'
                     ),
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        this.props.task
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        'Added by ',
+                        this.props.user
+                    ),
+                    _react2.default.createElement('textarea', { type: 'text',
+                        value: this.state.description,
+                        onChange: this.handleChangeDescription }),
                     _react2.default.createElement('input', { type: 'submit', value: 'zatwierd\u017A' })
                 )
             );
@@ -12000,8 +12013,7 @@ var EnterName = function (_React$Component) {
                         onChange: this.handleChangeName,
                         placeholder: 'Enter Your name..',
                         required: true,
-                        autoFocus: true }),
-                    _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+                        autoFocus: true })
                 )
             );
         }
@@ -12056,12 +12068,15 @@ var Header = function (_React$Component) {
             return _react2.default.createElement(
                 'header',
                 null,
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    'COMMUNITY'
+                ),
                 _react2.default.createElement('div', { id: 'logo' }),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'COMMUNITY',
-                    _react2.default.createElement('br', null),
                     'WINDOW'
                 )
             );
@@ -12227,7 +12242,6 @@ var SortableComponent = function (_React$Component) {
                 var value = _ref2.value,
                     index = _ref2.index;
 
-                console.log("co to value descript", value.description);
                 return _react2.default.createElement(
                     'li',
                     { className: 'boardText' },
@@ -12250,11 +12264,14 @@ var SortableComponent = function (_React$Component) {
                             className: 'move' },
                         _this2.props.action2
                     ),
-                    _react2.default.createElement('input', { type: 'submit',
+                    _react2.default.createElement('input', { value: 'Details..',
+                        type: 'submit',
                         onClick: _this2.handleShowDescription }),
                     _react2.default.createElement(_Description2.default, { newDescription: _this2.handleAddDescription,
                         id: value.id,
-                        description: value }),
+                        description: value,
+                        task: value.task,
+                        user: value.user }),
                     _react2.default.createElement(
                         'h2',
                         null,

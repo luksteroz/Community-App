@@ -93,7 +93,6 @@ class SortableComponent extends React.Component {
             <p className="dragLine">&#8691;</p>
         );
         const SortableItem = SortableElement(({value, index}) =>{
-            console.log("co to value descript", value.description);
             return (
             <li className="boardText">
                 <a onClick={this.handleChangeColor}
@@ -108,11 +107,14 @@ class SortableComponent extends React.Component {
                 onClick={this.handleMoveItem}
                 className="move">{this.props.action2}
                 </button>
-                <input type="submit"
+                <input value="Details.."
+                type="submit"
                 onClick={this.handleShowDescription}/>
                 <Description newDescription={this.handleAddDescription}
                 id={value.id}
-                description={value}/>
+                description={value}
+                task={value.task}
+                user={value.user}/>
                 <h2>{value.task}</h2>
                 <span> Added by {value.user}</span>
                 <DragHandle />

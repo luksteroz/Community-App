@@ -92,7 +92,9 @@ class Container extends React.Component{
             <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" userName={this.state.userName}/>
             <ChatApp userName={this.state.userName}/>
         </div>
-        <input type="submit" value="Save"
+        <input className="save"
+        type="submit"
+        value="Save"
         onClick={this.handleSaveTodo}/>
         <EnterName newName={this.handleNewName}/>
     </div>

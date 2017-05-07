@@ -29,10 +29,12 @@ class Description extends React.Component{
         return <div className="descriptionBackground">
             <form className="description"
                 onSubmit={this.handleAddDescription}>
+                <p onClick={this.handleHideDescription}>X</p>
+                <h1>{this.props.task}</h1>
+                <span>Added by {this.props.user}</span>
                 <textarea type="text"
                 value={this.state.description}
                 onChange={this.handleChangeDescription}/>
-                <span onClick={this.handleHideDescription}>X</span>
                 <input type="submit" value="zatwierdź"/>
             </form>
         </div>
