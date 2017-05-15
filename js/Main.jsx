@@ -6,7 +6,7 @@ import	{Router, Route, Link, IndexLink, IndexRoute, hashHistory} from 'react-rou
 class Main extends React.Component {
     render(){
         return <section>
-                <IndexLink to='/App' className="active">Log in with Google</IndexLink>
+                <IndexLink to='/App' className="active">Enter</IndexLink>
         </section>
     }
 }

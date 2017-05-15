@@ -12,7 +12,7 @@ class App extends React.Component{
         super(props);
     }
     render(){
-        return <Router history={hashHistory}>
+        return <Router history={browserHistory}>
 			<Route path='/' component={Main}/>
 			<Route path='/App'	component={Container}/>
 		</Router>;
