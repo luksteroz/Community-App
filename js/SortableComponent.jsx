@@ -29,6 +29,7 @@ class SortableComponent extends React.Component {
             task: this.state.inputText,
             description: this.state.description,
             user: this.props.userName,
+            color: "lightgrey",
         }
         items.push(element);
         this.setState({
@@ -52,13 +53,14 @@ class SortableComponent extends React.Component {
             task: items[id].task,
             description: description,
             user: items[id].user,
+            color: items[id].color,
         }
         if (typeof this.props.onAdd === "function") {
             this.props.onAdd(items, this.props.status);
         }
     }
     handleChangeColor=(e)=>{
-        console.log(e.currentTarget.style.color);
+        console.log(e.currentTarget.value);
         e.currentTarget.style.color == "yellow" ? e.currentTarget.style.color = "lightgrey" : e.currentTarget.style.color = "yellow"
     }
     handleRemoveTask=(e)=>{
@@ -96,7 +98,8 @@ class SortableComponent extends React.Component {
             return (
             <li className="boardText">
                 <a onClick={this.handleChangeColor}
-                style={{color: "lightgrey"}}>
+                style={{color: "lightgrey"}}
+                value={value.id}>
                 &#9733;
                 </a>
                 <button onClick={this.handleRemoveTask}

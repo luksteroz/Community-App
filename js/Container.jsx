@@ -14,6 +14,7 @@ class Container extends React.Component{
             toDo:[],
             doing:[],
             done: [],
+            userName: "",
         }
     }
     componentDidMount(){
@@ -75,7 +76,6 @@ class Container extends React.Component{
         this.setState({
             [`${curr}`]: tab,
         });
-        console.log("czy doszlo do doing",this.state);
     }
     handleNewName=(username)=>{
         console.log("nowy uzytkownik",username);

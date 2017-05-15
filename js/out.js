@@ -11558,7 +11558,6 @@ var Container = function (_React$Component) {
             }
             tab.push(element);
             _this.setState(_defineProperty({}, '' + curr, tab));
-            console.log("czy doszlo do doing", _this.state);
         };
 
         _this.handleNewName = function (username) {
@@ -11571,7 +11570,8 @@ var Container = function (_React$Component) {
         _this.state = {
             toDo: [],
             doing: [],
-            done: []
+            done: [],
+            userName: ""
         };
         return _this;
     }
@@ -12148,7 +12148,8 @@ var SortableComponent = function (_React$Component) {
                 id: _this.state.items.length,
                 task: _this.state.inputText,
                 description: _this.state.description,
-                user: _this.props.userName
+                user: _this.props.userName,
+                color: "lightgrey"
             };
             items.push(element);
             _this.setState({
@@ -12173,7 +12174,8 @@ var SortableComponent = function (_React$Component) {
                 id: items[id].id,
                 task: items[id].task,
                 description: description,
-                user: items[id].user
+                user: items[id].user,
+                color: items[id].color
             };
             if (typeof _this.props.onAdd === "function") {
                 _this.props.onAdd(items, _this.props.status);
@@ -12181,7 +12183,7 @@ var SortableComponent = function (_React$Component) {
         };
 
         _this.handleChangeColor = function (e) {
-            console.log(e.currentTarget.style.color);
+            console.log(e.currentTarget.value);
             e.currentTarget.style.color == "yellow" ? e.currentTarget.style.color = "lightgrey" : e.currentTarget.style.color = "yellow";
         };
 
@@ -12248,7 +12250,8 @@ var SortableComponent = function (_React$Component) {
                     _react2.default.createElement(
                         'a',
                         { onClick: _this2.handleChangeColor,
-                            style: { color: "lightgrey" } },
+                            style: { color: "lightgrey" },
+                            value: value.id },
                         '\u2605'
                     ),
                     _react2.default.createElement(
