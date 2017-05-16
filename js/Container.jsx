@@ -3,8 +3,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import ChatApp from "./ChatApp.jsx";
 import Header from "./Header.jsx";
-import EnterName from "./EnterName.jsx";
 import SortableComponent from "./SortableComponent.jsx";
+
 
 
 class Container extends React.Component{
@@ -14,6 +14,7 @@ class Container extends React.Component{
             toDo:[],
             doing:[],
             done: [],
+            userName: "",
         }
     }
     componentDidMount(){
@@ -31,6 +32,10 @@ class Container extends React.Component{
             }if (currentMessages.done != null) {
                 this.setState({
                     done: currentMessages.done,
+                })
+            }if (currentMessages.currentUser != null) {
+                this.setState({
+                    userName: currentMessages.user,
                 })
             }
         })
@@ -77,12 +82,12 @@ class Container extends React.Component{
         });
         console.log("czy doszlo do doing",this.state);
     }
-    handleNewName=(username)=>{
-        console.log("nowy uzytkownik",username);
-        this.setState({
-            userName: username,
-        })
-    }
+    // handleNewName=(username)=>{
+    //     console.log("nowy uzytkownik",username);
+    //     this.setState({
+    //         userName: username,
+    //     })
+    // }
     render(){
         return <div>
         <Header onSave={this.handleSaveTodo}/>
