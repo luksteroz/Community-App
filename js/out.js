@@ -20682,10 +20682,10 @@ var Container = function (_React$Component) {
             console.log("czy doszlo do doing", _this.state);
         };
 
-        _this.handleNewName = function (username) {
-            console.log("nowy uzytkownik", username);
+        _this.handleNewName = function (name) {
+            console.log("nowy uzytkownik", name);
             _this.setState({
-                userName: username
+                userName: name
             });
         };
 

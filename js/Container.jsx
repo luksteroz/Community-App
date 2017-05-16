@@ -82,10 +82,10 @@ class Container extends React.Component{
         });
         console.log("czy doszlo do doing",this.state);
     }
-    handleNewName=(username)=>{
-        console.log("nowy uzytkownik",username);
+    handleNewName=(name)=>{
+        console.log("nowy uzytkownik",name);
         this.setState({
-            userName: username,
+            userName: name,
         })
     }
     render(){
