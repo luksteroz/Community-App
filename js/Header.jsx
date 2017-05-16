@@ -33,10 +33,7 @@ class Header extends React.Component {
                     const userId = user.uid;
                     const name = user.displayName;
                     const photo = result.user.photoURL;
-                    this.setState({name: name, photo: photo, userId: userId});
-                    this.props.updateState();
-                    this.props.getUserData(name, photo, userId);
-                    this.props.getDatabase();
+                    this.props.newName(name);
                     alert('Witaj ' + this.state.name);
                 }).catch((error) => {
                     console.log(error);

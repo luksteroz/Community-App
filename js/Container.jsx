@@ -82,15 +82,15 @@ class Container extends React.Component{
         });
         console.log("czy doszlo do doing",this.state);
     }
-    // handleNewName=(username)=>{
-    //     console.log("nowy uzytkownik",username);
-    //     this.setState({
-    //         userName: username,
-    //     })
-    // }
+    handleNewName=(username)=>{
+        console.log("nowy uzytkownik",username);
+        this.setState({
+            userName: username,
+        })
+    }
     render(){
         return <div>
-        <Header onSave={this.handleSaveTodo}/>
+        <Header onSave={this.handleSaveTodo} newName={this.handleNewName}/>
         <div className="container">
             <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName} onSave={this.handleSaveTodo}/>
             <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done" userName={this.state.userName} onSave={this.handleSaveTodo}/>
