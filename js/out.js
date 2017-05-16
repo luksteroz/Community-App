@@ -21200,13 +21200,20 @@ var Header = function (_React$Component) {
 
         _this.handleLogIn = function (e) {
             var auth = firebase.auth();
+
             var provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then(function (result) {
+                // User signed in!
                 var token = result.credential.accessToken;
                 var user = result.user;
                 var userId = user.uid;
                 var name = user.displayName;
                 var photo = result.user.photoURL;
+                _this.setState({ name: name, photo: photo, userId: userId });
+                _this.props.updateState();
+                _this.props.getUserData(name, photo, userId);
+                _this.props.getDatabase();
+                alert('Witaj ' + _this.state.name);
             }).catch(function (error) {
                 console.log(error);
                 var errorMessage = error.message;

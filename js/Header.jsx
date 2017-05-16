@@ -23,19 +23,26 @@ class Header extends React.Component {
         this.props.onSave();
     }
     handleLogIn=(e)=>{
-            var auth = firebase.auth();
-            var provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then((result) => {
-                const token = result.credential.accessToken;
-                const user = result.user;
-                const userId = user.uid;
-                const name = user.displayName;
-                const photo = result.user.photoURL;
-            }).catch((error) => {
-                console.log(error);
-                var errorMessage = error.message
-                console.log(errorMessage);
-            });
+        var auth = firebase.auth();
+
+                var provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider).then((result) => {
+                    // User signed in!
+                    var token = result.credential.accessToken;
+                    var user = result.user;
+                    const userId = user.uid;
+                    const name = user.displayName;
+                    const photo = result.user.photoURL;
+                    this.setState({name: name, photo: photo, userId: userId});
+                    this.props.updateState();
+                    this.props.getUserData(name, photo, userId);
+                    this.props.getDatabase();
+                    alert('Witaj ' + this.state.name);
+                }).catch((error) => {
+                    console.log(error);
+                    var errorMessage = error.message
+                    console.log(errorMessage);
+                });
         }
         render(){
             return <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
