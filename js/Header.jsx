@@ -22,18 +22,22 @@ class Header extends React.Component {
     handleSaveTodo=(event)=>{
         this.props.onSave();
     }
+    handleSignOut=(e)=>{
+        firebase.auth().signOut().then(function() {
+            }).catch(function(error) {
+        });
+    }
     handleLogIn=(e)=>{
         var auth = firebase.auth();
 
                 var provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider).then((result) => {
-                    // User signed in!
                     var token = result.credential.accessToken;
                     var user = result.user;
                     const userId = user.uid;
                     const name = user.displayName;
                     const photo = result.user.photoURL;
-                    this.props.newName(name);
+                    this.props.newName(name, photo);
                     alert('Witaj ' + name);
                 }).catch((error) => {
                     console.log(error);
@@ -63,8 +67,9 @@ class Header extends React.Component {
                             <IconButton touch={true}>
                             <NavigationExpandMoreIcon />
                             </IconButton>}>
-                            <MenuItem primaryText="Documentation" />
-                            <MenuItem primaryText="More Info" />
+                            <MenuItem
+                            primaryText="Sign Out"
+                            onClick={this.handleSignOut}/> />
                         </IconMenu>
                     </ToolbarGroup>
                 </Toolbar>

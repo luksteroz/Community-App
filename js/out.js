@@ -20731,7 +20731,7 @@ var Container = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_Header2.default, { onSave: this.handleSaveTodo, newName: this.handleNewName }),
+                _react2.default.createElement(_Header2.default, { newName: this.handleNewName }),
                 _react2.default.createElement(
                     'div',
                     { className: 'container' },
@@ -21198,12 +21198,15 @@ var Header = function (_React$Component) {
             _this.props.onSave();
         };
 
+        _this.handleSignOut = function (e) {
+            firebase.auth().signOut().then(function () {}).catch(function (error) {});
+        };
+
         _this.handleLogIn = function (e) {
             var auth = firebase.auth();
 
             var provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then(function (result) {
-                // User signed in!
                 var token = result.credential.accessToken;
                 var user = result.user;
                 var userId = user.uid;
@@ -21260,8 +21263,10 @@ var Header = function (_React$Component) {
                                         { touch: true },
                                         _react2.default.createElement(_expandMore2.default, null)
                                     ) },
-                                _react2.default.createElement(_MenuItem2.default, { primaryText: 'Documentation' }),
-                                _react2.default.createElement(_MenuItem2.default, { primaryText: 'More Info' })
+                                _react2.default.createElement(_MenuItem2.default, {
+                                    primaryText: 'Sign Out',
+                                    onClick: this.handleSignOut }),
+                                ' />'
                             )
                         )
                     )

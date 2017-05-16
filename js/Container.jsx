@@ -15,6 +15,7 @@ class Container extends React.Component{
             doing:[],
             done: [],
             userName: "",
+            photo: "",
         }
     }
     componentDidMount(){
@@ -82,15 +83,16 @@ class Container extends React.Component{
         });
         console.log("czy doszlo do doing",this.state);
     }
-    handleNewName=(name)=>{
-        console.log("nowy uzytkownik",name);
+    handleNewName=(name, photo)=>{
+        console.log("nowy uzytkownik",name,photo);
         this.setState({
             userName: name,
+            photo: photo,
         })
     }
     render(){
         return <div>
-        <Header onSave={this.handleSaveTodo} newName={this.handleNewName}/>
+        <Header newName={this.handleNewName}/>
         <div className="container">
             <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName} onSave={this.handleSaveTodo}/>
             <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done" userName={this.state.userName} onSave={this.handleSaveTodo}/>
