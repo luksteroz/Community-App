@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import Description from './Description.jsx';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import TextField from 'material-ui/TextField';
+import {purple500, blue500} from 'material-ui/styles/colors';
+import Title from './Badge.jsx'
 
 class SortableComponent extends React.Component {
     constructor(props){
@@ -29,7 +34,6 @@ class SortableComponent extends React.Component {
             task: this.state.inputText,
             description: this.state.description,
             user: this.props.userName,
-            color: "lightgrey",
         }
         items.push(element);
         this.setState({
@@ -53,14 +57,13 @@ class SortableComponent extends React.Component {
             task: items[id].task,
             description: description,
             user: items[id].user,
-            color: items[id].color,
         }
         if (typeof this.props.onAdd === "function") {
             this.props.onAdd(items, this.props.status);
         }
     }
     handleChangeColor=(e)=>{
-        console.log(e.currentTarget.value);
+        console.log(e.currentTarget.style.color);
         e.currentTarget.style.color == "yellow" ? e.currentTarget.style.color = "lightgrey" : e.currentTarget.style.color = "yellow"
     }
     handleRemoveTask=(e)=>{
@@ -85,6 +88,9 @@ class SortableComponent extends React.Component {
     handleShowDescription=(e)=>{
         e.currentTarget.nextElementSibling.style.display = "block";
     }
+    handleSaveTodo=(e)=>{
+        this.props.onSave();
+    }
     componentWillReceiveProps(nextProps){
         this.setState({
             items: nextProps.items,
@@ -98,8 +104,7 @@ class SortableComponent extends React.Component {
             return (
             <li className="boardText">
                 <a onClick={this.handleChangeColor}
-                style={{color: "lightgrey"}}
-                value={value.id}>
+                style={{color: "lightgrey"}}>
                 &#9733;
                 </a>
                 <button onClick={this.handleRemoveTask}
@@ -110,9 +115,6 @@ class SortableComponent extends React.Component {
                 onClick={this.handleMoveItem}
                 className="move">{this.props.action2}
                 </button>
-                <input value="Details.."
-                type="submit"
-                onClick={this.handleShowDescription}/>
                 <Description newDescription={this.handleAddDescription}
                 id={value.id}
                 description={value}
@@ -138,18 +140,25 @@ class SortableComponent extends React.Component {
         return (
         <div>
             <div className="columns">
-                <h1>{this.props.status}<span>({this.state.items.length} tasks left)</span></h1>
+                <Title status={this.props.status}
+                    length={this.state.items.length}
+                    onSave={this.handleSaveTodo}/>
                 <SortableList items={this.state.items}
                 onSortEnd={this.onSortEnd}
                 useDragHandle={true}
                 helperClass="SortableHelper"/>
             </div>
             <form onSubmit={this.handleAddTask}>
-                <input type="text"
-                name="newTask"
-                placeholder="New task..."
-                value={this.state.inputText}
-                onChange={this.handleEditTask}/>
+                <MuiThemeProvider>
+                    <TextField
+                          floatingLabelText="Add new task"
+                          floatingLabelStyle={{color: purple500}}
+                          floatingLabelFocusStyle={{color: blue500}}
+                          value={this.state.inputText}
+                          onChange={this.handleEditTask}
+                          className="addTask"
+                    />
+                </MuiThemeProvider>
             </form>
         </div>)
     }

@@ -14,7 +14,6 @@ class Container extends React.Component{
             toDo:[],
             doing:[],
             done: [],
-            userName: "",
         }
     }
     componentDidMount(){
@@ -37,10 +36,10 @@ class Container extends React.Component{
         })
     }
     handleSaveTodo=(event)=>{
+        console.log("działa");
         firebase.database().ref("TodoApp/").set(this.state)
     }
     handleAddNewTask=(array, taskList)=>{
-        console.log("array????????/",array);
         let curr = "";
         if (taskList === "ToDo") {
             curr = "toDo";
@@ -76,6 +75,7 @@ class Container extends React.Component{
         this.setState({
             [`${curr}`]: tab,
         });
+        console.log("czy doszlo do doing",this.state);
     }
     handleNewName=(username)=>{
         console.log("nowy uzytkownik",username);
@@ -85,19 +85,14 @@ class Container extends React.Component{
     }
     render(){
         return <div>
-        <Header/>
+        <Header onSave={this.handleSaveTodo}/>
         <div className="container">
-            <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName}/>
-            <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done" userName={this.state.userName}/>
-            <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" userName={this.state.userName}/>
+            <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName} onSave={this.handleSaveTodo}/>
+            <SortableComponent items={this.state.doing} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Doing" remove="Remove" action2="Done" userName={this.state.userName} onSave={this.handleSaveTodo}/>
+            <SortableComponent items={this.state.done} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="Done" remove="Remove" userName={this.state.userName} onSave={this.handleSaveTodo}/>
             <ChatApp userName={this.state.userName}/>
+            </div>
         </div>
-        <input className="save"
-        type="submit"
-        value="Save"
-        onClick={this.handleSaveTodo}/>
-        <EnterName newName={this.handleNewName}/>
-    </div>
     }
 }
 

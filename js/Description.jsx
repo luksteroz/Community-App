@@ -1,5 +1,11 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 
 class Description extends React.Component{
@@ -7,37 +13,80 @@ class Description extends React.Component{
         super(props);
         this.state={
             description: this.props.description.description,
+            open: false,
+            date: null,
         }
+    }
+    handleOpen = () => {
+      this.setState({
+          open: true
+      });
+    };
+
+    handleClose = () => {
+      this.setState({
+          open: false
+      });
+      this.props.newDescription(this.state.description, this.props.id);
+    }
+
+    handleChangeDate=(e, date)=>{
+        console.log(date);
+        this.setState({
+            date: date,
+        });
     }
     handleChangeDescription=(e)=>{
         this.setState({
             description: e.currentTarget.value,
         })
     }
-    handleAddDescription=(e)=>{
-        e.preventDefault();
-        console.log(e.currentTarget.parentElement.parentElement);
-        e.currentTarget.parentElement.parentElement.style.display = "none";
-        if (typeof this.props.newDescription === "function") {
-            this.props.newDescription(this.state.description, this.props.id);
-        }
-    }
-    handleHideDescription=(e)=>{
-        e.currentTarget.parentElement.parentElement.style.display = "none";
-    }
+    // handleAddDescription=(e)=>{
+    //     e.preventDefault();
+    //     console.log(e.currentTarget.parentElement.parentElement);
+    //     e.currentTarget.parentElement.parentElement.style.display = "none";
+    //     if (typeof this.props.newDescription === "function") {
+    //         this.props.newDescription(this.state.description, this.props.id);
+    //     }
+    // }
+    // handleHideDescription=(e)=>{
+    //     e.currentTarget.parentElement.parentElement.style.display = "none";
+    // }
     render(){
-        return <div className="descriptionBackground">
-            <form className="description"
-                onSubmit={this.handleAddDescription}>
-                <p onClick={this.handleHideDescription}>X</p>
-                <h1>{this.props.task}</h1>
-                <span>Added by {this.props.user}</span>
-                <textarea type="text"
-                value={this.state.description}
-                onChange={this.handleChangeDescription}/>
-                <input type="submit" value="zatwierdź"/>
-            </form>
-        </div>
+        const actions = [
+              <FlatButton
+                label="Ok"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.handleClose}
+              />,
+            ];
+            return (
+            <MuiThemeProvider>
+                <div>
+                    <RaisedButton label="Details.."
+                    onTouchTap={this.handleOpen} />
+                    <Dialog
+                    title={this.props.task}
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}>
+                        <form className="description"
+                            onSubmit={this.handleAddDescription}>
+                            <p>Added by {this.props.user}</p>
+                            <textarea type="text"
+                            className="details"
+                            value={this.state.description}
+                            onChange={this.handleChangeDescription}/>
+                            <DatePicker hintText="When to do"
+                            onChange={this.handleChangeDate}
+                            value={this.state.date}/>
+                        </form>
+                    </Dialog>
+                </div>
+            </MuiThemeProvider>)
+
     }
 }
 

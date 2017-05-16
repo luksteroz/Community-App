@@ -3,11 +3,16 @@ import React from 'react';
 
 
 class Header extends React.Component {
+    handleSaveTodo=(event)=>{
+        this.props.onSave();
+    }
     render(){
         return <header>
-            <span>COMMUNITY</span>
             <div id="logo"></div>
-            <span>WINDOW</span>
+            <input className="save"
+            type="submit"
+            value="Save"
+            onClick={this.handleSaveTodo}/>
         </header>
     }
 }

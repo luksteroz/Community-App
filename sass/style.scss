@@ -12,43 +12,30 @@ $breakPointTablet: 750px;
 body{
     overflow-y: hidden;
     overflow-y: hidden;
-    background-image: url(../images/background1.jpg);
+    // background-image: url(../images/background1.jpg);
     background-color: white;
     background-size: 100% 100%;
     height: 100%;
     width: 100%;
+    h3{
+        font-size: 40px !important;
+        text-align: center !important;
+    }
+    .details{
+        width: 100% !important;
+        height: 50% !important;
+        resize: none !important;
+    }
     @media (max-width: $breakPointTablet) {
+    }
+    .itemSave{
+        font-size: 14px !important;
+        height: 16px !important;
+        text-align: center !important;
     }
     #app{
         height: 100vh;
         width: 100vw;
-        section{
-            // background-image: url(../images/background2.jpg);
-            // background-repeat: no-repeat;
-            // background-size: 100% 100%;
-            height: 100vh;
-            width: 100vw;
-            text-decoration: none;
-            margin: 0 auto;
-            position: relative;
-            text-align: center;
-            div{
-                line-height: 100vh;
-                width: 100vw;
-                margin: 0 auto;
-            }
-            .active{
-                line-height: 100vh;
-                font-size: 30px;
-                text-decoration: none;
-                border: 1px solid white;
-                margin: 0 auto;
-                color: white;
-                border-radius: 4px;
-                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-                background: rgb(66, 184, 221);
-            }
-        }
         .save{
             position: fixed;
             top:10px;
@@ -150,10 +137,10 @@ body{
                 input[name="chatInput"]{
                     width: 100%;
                     margin: 0;
-                    display: none;
+                    display: block;
                 }
                 .messages{
-                    display:none;
+                    display:block;
                     height: 100%;
                     width: 100%;
                     overflow: auto;
@@ -275,23 +262,9 @@ body{
                 }
             }
         }
-        input[type="text"]{
-            display: none;
-            padding: 0;
-            margin: 0;
-            border: 0;
-            box-sizing: border-box;
-            border: 1px solid #C2C2C2;
-            box-shadow: 1px 1px 4px #EBEBEB;
-            -moz-box-shadow: 1px 1px 4px #EBEBEB;
-            -webkit-box-shadow: 1px 1px 4px #EBEBEB;
-            border-radius: 3px;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            padding: 7px;
-            outline: none;
-            width: $widthColumn;
-            margin-left: $marginColumn;
+        .addTask{
+            width: $widthColumn !important;
+            margin-left: $marginColumn !important;
             @media (max-width: $breakPointTablet) {
             height: 20px;
             font-size: 18px;
@@ -312,9 +285,14 @@ body{
             width: 100%;
             margin-left: 0;
             margin-top: 5px;
-            h1{
-                font-size: 14px;
+                h1{
+                    font-size: 14px;
+                }
             }
+            h1{
+                font-size: 28px;
+                line-height: 92px;
+                cursor: pointer
             }
             span{
                 font-size: 10px;
@@ -341,50 +319,14 @@ body{
                     width: 98%;
                     max-height: 80px;
                     }
-                    .descriptionBackground{
-                        display: none;
-                        position: absolute;
-                        left:0;
-                        top:0;
-                        background-color: RGBa(0,0,0,0.8);
-                        height: 100vh;
-                        width: 100vw;
-                        .description{
-                            position: fixed;
-                            height: 24vh;
-                            width: 40vw;
-                            margin-left: 30vw;
-                            margin-top: 38vh;
-                            background: RGB(195, 115, 185);
+                        h1{
                             text-align: center;
-                            z-index: 1;
+                        }
+                        input{
+                            color: white;
                             border-radius: 4px;
-                            p{
-                                text-align: right;
-                                margin: 0;
-                                background: inherit;
-                                font-size: 10px;
-                                position: relative;
-                                cursor: pointer;
-                                padding-right: 5px;
-                                @media (min-width: $breakPointTablet) {
-                                font-size: 14px;
-                                }
-                            }
-                            h1{
-                                text-align: center;
-                            }
-                            textarea{
-                                width: 100%;
-                                height: 50%;
-                                resize: none;
-                            }
-                            input{
-                                color: white;
-                                border-radius: 4px;
-                                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-                                background: rgb(66, 184, 221);
-                            }
+                            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                            background: rgb(66, 184, 221);
                         }
                     }
                     h2{
@@ -397,7 +339,6 @@ body{
                     p {
                         height:80px;
                         width: $widthColumn;
-
                     }
                     button{
                         font-weight: bold;
@@ -456,7 +397,6 @@ body{
                 }
             }
         }
-    }
 
     ::-webkit-scrollbar {
         width: 2px;
@@ -494,12 +434,8 @@ body{
     font-size: 20px;
     border: none;
     text-align: center;
-    .descriptionBackground{
-        display: none;
-    }
     button{
-        display: none;
+        display: block;
     }
 }
-
 @-webkit-keyframes swing-top-fwd{0%{-webkit-transform:rotateX(0);transform:rotateX(0);-webkit-transform-origin:top;transform-origin:top}100%{-webkit-transform:rotateX(180deg);transform:rotateX(180deg);-webkit-transform-origin:top;transform-origin:top}}@keyframes swing-top-fwd{0%{-webkit-transform:rotateX(0);transform:rotateX(0);-webkit-transform-origin:top;transform-origin:top}100%{-webkit-transform:rotateX(180deg);transform:rotateX(180deg);-webkit-transform-origin:top;transform-origin:top}}
