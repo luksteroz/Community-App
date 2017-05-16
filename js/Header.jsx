@@ -23,7 +23,6 @@ class Header extends React.Component {
         this.props.onSave();
     }
     handleLogIn=(e)=>{
-            setDomStorageEnabled(true);
             var auth = firebase.auth();
             var provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then((result) => {
