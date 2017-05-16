@@ -34,7 +34,7 @@ class Header extends React.Component {
                     const name = user.displayName;
                     const photo = result.user.photoURL;
                     this.props.newName(name);
-                    alert('Witaj ' + this.state.name);
+                    alert('Witaj ' + name);
                 }).catch((error) => {
                     console.log(error);
                     var errorMessage = error.message

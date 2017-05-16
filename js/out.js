@@ -20682,6 +20682,13 @@ var Container = function (_React$Component) {
             console.log("czy doszlo do doing", _this.state);
         };
 
+        _this.handleNewName = function (username) {
+            console.log("nowy uzytkownik", username);
+            _this.setState({
+                userName: username
+            });
+        };
+
         _this.state = {
             toDo: [],
             doing: [],
@@ -20720,18 +20727,11 @@ var Container = function (_React$Component) {
         }
     }, {
         key: 'render',
-
-        // handleNewName=(username)=>{
-        //     console.log("nowy uzytkownik",username);
-        //     this.setState({
-        //         userName: username,
-        //     })
-        // }
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_Header2.default, { onSave: this.handleSaveTodo }),
+                _react2.default.createElement(_Header2.default, { onSave: this.handleSaveTodo, newName: this.handleNewName }),
                 _react2.default.createElement(
                     'div',
                     { className: 'container' },
@@ -21209,11 +21209,8 @@ var Header = function (_React$Component) {
                 var userId = user.uid;
                 var name = user.displayName;
                 var photo = result.user.photoURL;
-                _this.setState({ name: name, photo: photo, userId: userId });
-                _this.props.updateState();
-                _this.props.getUserData(name, photo, userId);
-                _this.props.getDatabase();
-                alert('Witaj ' + _this.state.name);
+                _this.props.newName(name);
+                alert('Witaj ' + name);
             }).catch(function (error) {
                 console.log(error);
                 var errorMessage = error.message;
