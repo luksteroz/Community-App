@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import TextField from 'material-ui/TextField';
+import {purple500, blue500} from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 
@@ -74,11 +77,15 @@ class ChatApp extends React.Component{
                     </ul>
                 </div>
                 <form onSubmit={this.handleSubmitMessage}>
-                    <input type="text"
-                        name="chatInput"
-                        onChange={this.handleUpdateMessage}
-                        value={this.state.chatInput}
-                        placeholder="Write a message..."/>
+                    <MuiThemeProvider>
+                    <TextField
+                          floatingLabelText="Write a message.."
+                          floatingLabelStyle={{color: purple500}}
+                          floatingLabelFocusStyle={{color: blue500}}
+                          value={this.state.chatInput}
+                          onChange={this.handleUpdateMessage}
+                          className="addTask"/>
+                    </MuiThemeProvider>
                 </form>
           </div>);
         }

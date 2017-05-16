@@ -4,13 +4,8 @@ import	{Router, Route, Link, IndexLink, IndexRoute, hashHistory} from 'react-rou
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
+import {IconMenu,IconButton,FontIcon, MenuItem, DropDownMenu, RaisedButton} from 'material-ui';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
@@ -50,7 +45,6 @@ class Header extends React.Component {
                         photo: photo,
                     })
                     this.props.newName(name, photo);
-                    alert('Witaj ' + name);
                 }).catch((error) => {
                     console.log(error);
                     var errorMessage = error.message
