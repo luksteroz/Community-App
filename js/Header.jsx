@@ -31,7 +31,6 @@ class Header extends React.Component {
                 const userId = user.uid;
                 const name = user.displayName;
                 const photo = result.user.photoURL;
-                firebase.database().ref("currentUser/").set(name)
             }).catch((error) => {
                 console.log(error);
                 var errorMessage = error.message

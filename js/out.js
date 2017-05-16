@@ -21207,7 +21207,6 @@ var Header = function (_React$Component) {
                 var userId = user.uid;
                 var name = user.displayName;
                 var photo = result.user.photoURL;
-                firebase.database().ref("currentUser/").set(name);
             }).catch(function (error) {
                 console.log(error);
                 var errorMessage = error.message;
