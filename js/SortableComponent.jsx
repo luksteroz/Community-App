@@ -9,6 +9,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/TextField';
 import {purple500, blue500} from 'material-ui/styles/colors';
 import Title from './Badge.jsx'
+import Snackbar from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 
 class SortableComponent extends React.Component {
     constructor(props){
@@ -18,6 +22,7 @@ class SortableComponent extends React.Component {
           inputText: "",
           description:"",
           userName:"",
+          open: false,
         };
     }
     onSortEnd = ({oldIndex, newIndex}) => {
@@ -38,6 +43,7 @@ class SortableComponent extends React.Component {
         items.push(element);
         this.setState({
             inputText: "",
+            open: true,
         });
         if (typeof this.props.onAdd === "function") {
             this.props.onAdd(items, this.props.status);
@@ -150,14 +156,20 @@ class SortableComponent extends React.Component {
             </div>
             <form onSubmit={this.handleAddTask}>
                 <MuiThemeProvider>
+                <div>
                     <TextField
                           floatingLabelText="Add new task"
                           floatingLabelStyle={{color: purple500}}
                           floatingLabelFocusStyle={{color: blue500}}
                           value={this.state.inputText}
                           onChange={this.handleEditTask}
-                          className="addTask"
-                    />
+                          className="addTask"/>
+                    <Snackbar
+                        open={this.state.open}
+                        message="New task added to your list! :)"
+                        autoHideDuration={4000}
+                        style={{textAlign: "center"}}/>
+                </div>
                 </MuiThemeProvider>
             </form>
         </div>)

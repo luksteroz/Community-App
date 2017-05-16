@@ -12,12 +12,20 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import Avatar from 'material-ui/Avatar';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import {List, ListItem} from 'material-ui/List';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ContentFilter from 'material-ui/svg-icons/content/filter-list';
 
 class Header extends React.Component {
     constructor(props){
         super(props);
+        this.state={
+            user: "Unknown User",
+            photo: "./images/unknownUser.jpg",
+        }
     }
     handleSaveTodo=(event)=>{
         this.props.onSave();
@@ -37,6 +45,10 @@ class Header extends React.Component {
                     const userId = user.uid;
                     const name = user.displayName;
                     const photo = result.user.photoURL;
+                    this.setState({
+                        user: name,
+                        photo: photo,
+                    })
                     this.props.newName(name, photo);
                     alert('Witaj ' + name);
                 }).catch((error) => {
@@ -50,27 +62,32 @@ class Header extends React.Component {
                 <div>
                 <Toolbar>
                     <ToolbarGroup firstChild={true}>
-                        <DropDownMenu onChange={this.handleChange}>
-                            <MenuItem value={1} primaryText="About me" />
-                            <MenuItem value={2} primaryText="My projects" />
-                        </DropDownMenu>
+                    <IconMenu
+                        iconButtonElement={<IconButton><ContentFilter /></IconButton>}
+                        onChange={this.handleChangeMultiple}
+                        value={this.state.valueMultiple}
+                        multiple={true}>
+                        <MenuItem value="1" primaryText="Log in" />
+                        <MenuItem value="2" primaryText="Sign Out" />
+                        <MenuItem value="4" primaryText="About Me" />
+                        <MenuItem value="5" primaryText="GitHub" />
+                    </IconMenu>
                     </ToolbarGroup>
                     <ToolbarGroup>
-                        <ToolbarTitle text="Options" />
-                            <FontIcon className="muidocs-icon-custom-sort" />
+                    <ListItem
+                        disabled={true}
+                        leftAvatar={
+                            <Avatar src={this.state.photo} />}>
+                          {this.state.user}
+                    </ListItem>
                         <ToolbarSeparator />
                         <RaisedButton label="Log in with Google"
                             tooltip="Listings"
                             primary={true}
                             onClick={this.handleLogIn}/>
-                        <IconMenu iconButtonElement={
-                            <IconButton touch={true}>
-                            <NavigationExpandMoreIcon />
-                            </IconButton>}>
-                            <MenuItem
-                            primaryText="Sign Out"
-                            onClick={this.handleSignOut}/> />
-                        </IconMenu>
+                            <RaisedButton label="Sign Out"
+                            secondary={true}
+                            onClick={this.handleSignOut}/>
                     </ToolbarGroup>
                 </Toolbar>
             </div>
