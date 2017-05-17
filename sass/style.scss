@@ -12,7 +12,7 @@ $breakPointTablet: 750px;
 body{
     overflow-y: hidden;
     overflow-y: hidden;
-    // background-image: url(../images/background1.jpg);
+    background-image: url(../images/background1.jpg);
     background-color: white;
     background-size: 100% 100%;
     height: 100%;
@@ -23,7 +23,7 @@ body{
     }
     .details{
         width: 100% !important;
-        height: 50% !important;
+        height: 100px !important;
         resize: none !important;
     }
     @media (max-width: $breakPointTablet) {
@@ -37,30 +37,35 @@ body{
         height: 100vh;
         width: 100vw;
         margin: 0 auto;
-        .save{
-            position: fixed;
-            top:10px;
-            @media (min-width: $breakPointTablet) {
-                position: relative;
-                font-size: 25px;
-            }
-            width:20vw;
-            height: 4vh;
-            margin-left: 20px;
-            color: white;
-            font-weight: bold;
-            font-size: 15px;
-            border-radius: 4px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            background: rgb(66, 184, 221);
-        }
+        // .save{
+        //     position: fixed;
+        //     top:10px;
+        //     @media (min-width: $breakPointTablet) {
+        //         position: relative;
+        //         font-size: 25px;
+        //     }
+        //     width:20vw;
+        //     height: 4vh;
+        //     margin-left: 20px;
+        //     color: white;
+        //     font-weight: bold;
+        //     font-size: 15px;
+        //     border-radius: 4px;
+        //     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        //     background: rgb(66, 184, 221);
+        // }
 
+    .content{
+        margin: 0 auto;
+        position: relative;
+    }
         .container{
+            margin: 0 auto;
+            width: 90%;
             display: flex;
             flex-direction: row;
             height: $heightColumn + $marginTopColumn;
             margin-bottom: $marginTopColumn;
-            width: 80%;
             @media (max-width: $breakPointTablet) {
                 flex-direction: column;
             }
@@ -212,8 +217,7 @@ body{
             }
         }
         .addTask{
-            width: $widthColumn !important;
-            margin-left: $marginColumn !important;
+            width: 100% !important;
             @media (max-width: $breakPointTablet) {
             height: 20px;
             font-size: 18px;
@@ -225,10 +229,10 @@ body{
             height: $heightColumn;
             background-color: rgba(66, 184, 221, 0.5);
             width: $widthColumn;
-            margin-left: $marginColumn;
             margin-top: $marginTopColumn;
             overflow-x: auto;
             text-align: center;
+            margin-left: 0;
             @media (max-width: $breakPointTablet) {
             height: 30vh;
             width: 100%;
@@ -259,9 +263,8 @@ body{
                 height: 100%;
                 }
                 .boardText{
-                    // background-color: rgba(255,255,255,1);
                     margin: 10px 5px;
-                    background-color: rgba(66, 184, 221, 0.8);
+                    background-color: lightslategrey;
                     opacity:1;
                     border-radius: 10px 10px 10px 10px;
                     @media (max-width: $breakPointTablet) {

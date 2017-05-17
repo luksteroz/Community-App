@@ -53,9 +53,11 @@ class Header extends React.Component {
         }
         render(){
             return <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                <div>
-                <Toolbar>
-                    <ToolbarGroup firstChild={true}>
+                <div className="header">
+                <Toolbar
+                style={{padding: "0"}}>
+                    <ToolbarGroup firstChild={true}
+                    style={{marginLeft: "5%", padding: "0"}}>
                     <IconMenu
                         iconButtonElement={<IconButton><ContentFilter /></IconButton>}
                         onChange={this.handleChangeMultiple}
@@ -67,7 +69,7 @@ class Header extends React.Component {
                         <MenuItem value="5" primaryText="GitHub" />
                     </IconMenu>
                     </ToolbarGroup>
-                    <ToolbarGroup>
+                    <ToolbarGroup style={{marginRight: "5%"}}>
                     <ListItem
                         disabled={true}
                         leftAvatar={
@@ -79,7 +81,9 @@ class Header extends React.Component {
                             tooltip="Listings"
                             primary={true}
                             onClick={this.handleLogIn}/>
-                            <RaisedButton label="Sign Out"
+                            <RaisedButton
+                            label="Sign Out"
+                            style={{marginRight: "0"}}
                             secondary={true}
                             onClick={this.handleSignOut}/>
                     </ToolbarGroup>

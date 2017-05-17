@@ -9,6 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import {purple500, blue500} from 'material-ui/styles/colors';
 import Title from './Badge.jsx'
 import {Snackbar, RaisedButton, TextField, Paper} from 'material-ui';
+import FlatButton from 'material-ui/FlatButton';
 
 
 
@@ -21,7 +22,7 @@ class SortableComponent extends React.Component {
           description:"",
           userName:"",
           open: false,
-          display: "none",
+          display: "block",
         };
     }
     onSortEnd = ({oldIndex, newIndex}) => {
@@ -67,10 +68,6 @@ class SortableComponent extends React.Component {
             this.props.onAdd(items, this.props.status);
         }
     }
-    handleChangeColor=(e)=>{
-        console.log(e.currentTarget.style.color);
-        e.currentTarget.style.color == "yellow" ? e.currentTarget.style.color = "lightgrey" : e.currentTarget.style.color = "yellow"
-    }
     handleRemoveTask=(e)=>{
         const items = this.state.items.slice();
         items.splice(e.currentTarget.value, 1)
@@ -90,9 +87,6 @@ class SortableComponent extends React.Component {
             this.props.onMove(element, this.props.status);
         }
     }
-    handleShowDescription=(e)=>{
-        e.currentTarget.nextElementSibling.style.display = "block";
-    }
     handleSaveTodo=(e)=>{
         this.props.onSave();
     }
@@ -108,18 +102,13 @@ class SortableComponent extends React.Component {
         const SortableItem = SortableElement(({value, index}) =>{
             return (
                 <li className="boardText">
-                <a onClick={this.handleChangeColor}
-                style={{color: "lightgrey"}}>
-                &#9733;
-                </a>
-                <button onClick={this.handleRemoveTask}
-                value={value.id}>
-                {this.props.remove}
-                </button>
-                <button value={value.id}
-                onClick={this.handleMoveItem}
-                className="move">{this.props.action2}
-                </button>
+                <FlatButton label={this.props.remove}
+                 value={value.id}
+                 secondary={true}
+                 onClick={this.handleRemoveTask}/>
+                <FlatButton label= {this.props.action2}
+                value={value.id}
+                onClick={this.handleMoveItem}/>
                 <h2>{value.task}</h2>
                 <Description newDescription={this.handleAddDescription}
                 id={value.id}
@@ -159,12 +148,13 @@ class SortableComponent extends React.Component {
                 <div>
                     <TextField
                           floatingLabelText="Add new task"
-                          floatingLabelStyle={{color: purple500}}
-                          floatingLabelFocusStyle={{color: blue500}}
+                          floatingLabelStyle={{color: "white"}}
+                          floatingLabelFocusStyle={{color: "white"}}
                           value={this.state.inputText}
+                          fullWidth={true}
                           onChange={this.handleEditTask}
                           className="addTask"
-                          style={this.props.userName === "Unknown user" ? {display: "none"} : {display: "block"}}/>
+                          style={this.props.userName === "Unknown user" ? {display: "block", backgroundColor:"rgba(232, 0, 82,0.8)"} : {display: "block"}}/>
                     <Snackbar
                         open={this.state.open}
                         message="New task added to your list! :)"

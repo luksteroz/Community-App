@@ -83,8 +83,10 @@ class ChatApp extends React.Component{
                           floatingLabelStyle={{color: purple500}}
                           floatingLabelFocusStyle={{color: blue500}}
                           value={this.state.chatInput}
+                          fullWidth={true}
                           onChange={this.handleUpdateMessage}
-                          className="addTask"/>
+                          className="addTask"
+                          style={{width: "100%"}}/>
                     </MuiThemeProvider>
                 </form>
           </div>);

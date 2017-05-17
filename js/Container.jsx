@@ -4,7 +4,9 @@ import {render} from 'react-dom';
 import ChatApp from "./ChatApp.jsx";
 import Header from "./Header.jsx";
 import SortableComponent from "./SortableComponent.jsx";
-
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 
 class Container extends React.Component{
@@ -91,7 +93,8 @@ class Container extends React.Component{
         })
     }
     render(){
-        return <div>
+        return <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <div>
         <Header newName={this.handleNewName}/>
         <div className="container">
             <SortableComponent items={this.state.toDo} onMove={this.handleOnMove} onAdd={this.handleAddNewTask} status="ToDo" remove="Remove" action2="Doing" userName={this.state.userName} onSave={this.handleSaveTodo}/>
@@ -100,6 +103,7 @@ class Container extends React.Component{
             <ChatApp userName={this.state.userName}/>
             </div>
         </div>
+        </MuiThemeProvider>
     }
 }
 
