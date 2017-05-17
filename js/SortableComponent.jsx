@@ -101,7 +101,7 @@ class SortableComponent extends React.Component {
         );
         const SortableItem = SortableElement(({value, index}) =>{
             return (
-                <li className="boardText">
+            <li className="boardText">
                 <FlatButton label={this.props.remove}
                  value={value.id}
                  secondary={true}
@@ -109,6 +109,7 @@ class SortableComponent extends React.Component {
                 <FlatButton label= {this.props.action2}
                 value={value.id}
                 onClick={this.handleMoveItem}/>
+                <br></br>
                 <h2>{value.task}</h2>
                 <Description newDescription={this.handleAddDescription}
                 id={value.id}
@@ -154,7 +155,7 @@ class SortableComponent extends React.Component {
                           fullWidth={true}
                           onChange={this.handleEditTask}
                           className="addTask"
-                          style={this.props.userName === "Unknown user" ? {display: "block", backgroundColor:"rgba(232, 0, 82,0.8)"} : {display: "block"}}/>
+                          style={this.props.userName === "Unknown user" ? {display: "none"} : {display: "block"}}/>
                     <Snackbar
                         open={this.state.open}
                         message="New task added to your list! :)"
