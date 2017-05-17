@@ -78,15 +78,15 @@ class ChatApp extends React.Component{
                 </div>
                 <form onSubmit={this.handleSubmitMessage}>
                     <MuiThemeProvider>
-                    <TextField
-                          floatingLabelText="Write a message.."
-                          floatingLabelStyle={{color: "white"}}
-                          floatingLabelFocusStyle={{color: "white"}}
-                          value={this.state.chatInput}
-                          fullWidth={true}
-                          onChange={this.handleUpdateMessage}
-                          className="addMessage"
-                          style={this.props.userName === "Unknown user" ? {display: "none"} : {display: "block"}}/>
+                        <TextField
+                        floatingLabelText="Write a message.."
+                        floatingLabelStyle={{color: "white"}}
+                        floatingLabelFocusStyle={{color: "white"}}
+                        value={this.state.chatInput}
+                        fullWidth={true}
+                        onChange={this.handleUpdateMessage}
+                        className="addMessage"
+                        style={this.props.userName === "Unknown user" ? {display: "block"} : {display: "block"}}/>
                     </MuiThemeProvider>
                 </form>
           </div>);

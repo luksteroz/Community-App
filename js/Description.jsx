@@ -66,7 +66,7 @@ class Description extends React.Component{
                     <RaisedButton label="Details.."
                     onTouchTap={this.handleOpen}
                     style={{width: "100%",
-                    height: "18px"}}/>
+                    height: "18px", marginTop: "5px"}}/>
                     <Dialog
                     title={this.props.task}
                     actions={actions}

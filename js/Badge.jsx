@@ -46,6 +46,7 @@ class Title extends React.Component{
         );
         return <MuiThemeProvider>
                 <AppBar
+                    style={{padding: "10px", textAlign: "center"}}
                     title={<h1>{this.props.status}</h1>}
                     iconElementRight={<Menu/>}
                     iconElementLeft={<Notify/>}/>

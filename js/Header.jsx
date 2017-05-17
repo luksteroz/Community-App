@@ -55,7 +55,7 @@ class Header extends React.Component {
             return <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="header">
                 <Toolbar
-                style={{padding: "0"}}>
+                style={{padding: "0", height: "8vh"}}>
                     <ToolbarGroup firstChild={true}
                     style={{marginLeft: "5%", padding: "0"}}>
                     <IconMenu

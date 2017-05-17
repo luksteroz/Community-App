@@ -17035,7 +17035,7 @@ var Description = function (_React$Component) {
                     _react2.default.createElement(_RaisedButton2.default, { label: 'Details..',
                         onTouchTap: this.handleOpen,
                         style: { width: "100%",
-                            height: "18px" } }),
+                            height: "18px", marginTop: "5px" } }),
                     _react2.default.createElement(
                         _Dialog2.default,
                         {
@@ -29128,6 +29128,7 @@ var Title = function (_React$Component) {
                 _MuiThemeProvider2.default,
                 null,
                 _react2.default.createElement(_AppBar2.default, {
+                    style: { padding: "10px", textAlign: "center" },
                     title: _react2.default.createElement(
                         'h1',
                         null,
@@ -29309,7 +29310,7 @@ var ChatApp = function (_React$Component) {
                             fullWidth: true,
                             onChange: this.handleUpdateMessage,
                             className: 'addMessage',
-                            style: this.props.userName === "Unknown user" ? { display: "none" } : { display: "block" } })
+                            style: this.props.userName === "Unknown user" ? { display: "block" } : { display: "block" } })
                     )
                 )
             );
@@ -29451,7 +29452,7 @@ var Header = function (_React$Component) {
                     _react2.default.createElement(
                         _Toolbar.Toolbar,
                         {
-                            style: { padding: "0" } },
+                            style: { padding: "0", height: "8vh" } },
                         _react2.default.createElement(
                             _Toolbar.ToolbarGroup,
                             { firstChild: true,
@@ -29635,7 +29636,6 @@ var SortableComponent = function (_React$Component) {
 
         _this.handleMoveItem = function (e) {
             var items = _this.state.items.slice();
-            console.log("chce sam element", items[e.currentTarget.value]);
             var element = items[e.currentTarget.value];
             _this.handleRemoveTask(e);
             if (typeof _this.props.onMove === "function") {
@@ -29687,10 +29687,12 @@ var SortableComponent = function (_React$Component) {
                     _react2.default.createElement(_FlatButton2.default, { label: _this2.props.remove,
                         value: value.id,
                         secondary: true,
-                        onClick: _this2.handleRemoveTask }),
+                        onClick: _this2.handleRemoveTask,
+                        style: { width: "50%" } }),
                     _react2.default.createElement(_FlatButton2.default, { label: _this2.props.action2,
                         value: value.id,
-                        onClick: _this2.handleMoveItem }),
+                        onClick: _this2.handleMoveItem,
+                        style: { width: "50%" } }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'h2',
@@ -29725,7 +29727,6 @@ var SortableComponent = function (_React$Component) {
                     })
                 );
             });
-            console.log(this.props.userName, "nazwa");
             return _react2.default.createElement(
                 'div',
                 null,
@@ -29757,7 +29758,7 @@ var SortableComponent = function (_React$Component) {
                                 fullWidth: true,
                                 onChange: this.handleEditTask,
                                 className: 'addTask',
-                                style: this.props.userName === "Unknown user" ? { display: "none" } : { display: "block" } }),
+                                style: this.props.userName === "Unknown user" ? { display: "block" } : { display: "block" } }),
                             _react2.default.createElement(_materialUi.Snackbar, {
                                 open: this.state.open,
                                 message: 'New task added to your list! :)',

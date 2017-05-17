@@ -80,7 +80,6 @@ class SortableComponent extends React.Component {
     }
     handleMoveItem=(e)=>{
         const items = this.state.items.slice();
-        console.log("chce sam element", items[e.currentTarget.value]);
         const element = items[e.currentTarget.value];
         this.handleRemoveTask(e);
         if (typeof this.props.onMove === "function") {
@@ -103,12 +102,14 @@ class SortableComponent extends React.Component {
             return (
             <li className="boardText">
                 <FlatButton label={this.props.remove}
-                 value={value.id}
-                 secondary={true}
-                 onClick={this.handleRemoveTask}/>
-                <FlatButton label= {this.props.action2}
                 value={value.id}
-                onClick={this.handleMoveItem}/>
+                secondary={true}
+                onClick={this.handleRemoveTask}
+                style={{width: "50%"}}/>
+                <FlatButton label={this.props.action2}
+                value={value.id}
+                onClick={this.handleMoveItem}
+                style={{width: "50%"}}/>
                 <br></br>
                 <h2>{value.task}</h2>
                 <Description newDescription={this.handleAddDescription}
@@ -132,7 +133,6 @@ class SortableComponent extends React.Component {
             </ul>
             );
         });
-        console.log(this.props.userName, "nazwa");
         return (
         <div>
             <div className="columns">
@@ -155,7 +155,7 @@ class SortableComponent extends React.Component {
                           fullWidth={true}
                           onChange={this.handleEditTask}
                           className="addTask"
-                          style={this.props.userName === "Unknown user" ? {display: "none"} : {display: "block"}}/>
+                          style={this.props.userName === "Unknown user" ? {display: "block"} : {display: "block"}}/>
                     <Snackbar
                         open={this.state.open}
                         message="New task added to your list! :)"
