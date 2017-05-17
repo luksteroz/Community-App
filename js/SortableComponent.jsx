@@ -6,11 +6,9 @@ import Description from './Description.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import TextField from 'material-ui/TextField';
 import {purple500, blue500} from 'material-ui/styles/colors';
 import Title from './Badge.jsx'
-import Snackbar from 'material-ui/Snackbar';
-import RaisedButton from 'material-ui/RaisedButton';
+import {Snackbar, RaisedButton, TextField, Paper} from 'material-ui';
 
 
 
@@ -23,6 +21,7 @@ class SortableComponent extends React.Component {
           description:"",
           userName:"",
           open: false,
+          display: "none",
         };
     }
     onSortEnd = ({oldIndex, newIndex}) => {
@@ -108,7 +107,7 @@ class SortableComponent extends React.Component {
         );
         const SortableItem = SortableElement(({value, index}) =>{
             return (
-            <li className="boardText">
+                <li className="boardText">
                 <a onClick={this.handleChangeColor}
                 style={{color: "lightgrey"}}>
                 &#9733;
@@ -121,12 +120,12 @@ class SortableComponent extends React.Component {
                 onClick={this.handleMoveItem}
                 className="move">{this.props.action2}
                 </button>
+                <h2>{value.task}</h2>
                 <Description newDescription={this.handleAddDescription}
                 id={value.id}
                 description={value}
                 task={value.task}
                 user={value.user}/>
-                <h2>{value.task}</h2>
                 <span> Added by {value.user}</span>
                 <DragHandle />
             </li>)
@@ -143,6 +142,7 @@ class SortableComponent extends React.Component {
             </ul>
             );
         });
+        console.log(this.props.userName, "nazwa");
         return (
         <div>
             <div className="columns">
@@ -163,7 +163,8 @@ class SortableComponent extends React.Component {
                           floatingLabelFocusStyle={{color: blue500}}
                           value={this.state.inputText}
                           onChange={this.handleEditTask}
-                          className="addTask"/>
+                          className="addTask"
+                          style={this.props.userName === "Unknown user" ? {display: "none"} : {display: "block"}}/>
                     <Snackbar
                         open={this.state.open}
                         message="New task added to your list! :)"

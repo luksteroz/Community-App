@@ -58,14 +58,15 @@ class Description extends React.Component{
                 label="Ok"
                 primary={true}
                 keyboardFocused={true}
-                onTouchTap={this.handleClose}
-              />,
+                onTouchTap={this.handleClose}/>,
             ];
             return (
             <MuiThemeProvider>
                 <div>
                     <RaisedButton label="Details.."
-                    onTouchTap={this.handleOpen} />
+                    onTouchTap={this.handleOpen}
+                    style={{width: "100%",
+                    height: "18px"}}/>
                     <Dialog
                     title={this.props.task}
                     actions={actions}
@@ -74,11 +75,11 @@ class Description extends React.Component{
                     onRequestClose={this.handleClose}>
                         <form className="description"
                             onSubmit={this.handleAddDescription}>
-                            <p>Added by {this.props.user}</p>
                             <textarea type="text"
                             className="details"
                             value={this.state.description}
                             onChange={this.handleChangeDescription}/>
+                            <p>Added by {this.props.user}</p>
                             <DatePicker hintText="When to do"
                             onChange={this.handleChangeDate}
                             value={this.state.date}/>

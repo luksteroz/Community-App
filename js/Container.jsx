@@ -14,7 +14,7 @@ class Container extends React.Component{
             toDo:[],
             doing:[],
             done: [],
-            userName: "",
+            userName: "Unknown user",
             photo: "",
         }
     }
