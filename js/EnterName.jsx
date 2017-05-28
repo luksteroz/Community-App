@@ -1,12 +1,12 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
 
 class EnterName extends React.Component {
     constructor(props) {
         super(props);
+
         this.state={
-            userName:"",
-        }
+            userName: ''
+        };
     }
     handleChangeName=(event)=>{
         this.setState({
@@ -15,9 +15,10 @@ class EnterName extends React.Component {
     }
     handleAddName=(event)=>{
         event.preventDefault();
-        const enter = document.querySelector(".enterName");
-        const chat = document.querySelector(".messages");
+        const enter = document.querySelector('.enterName');
+        const chat = document.querySelector('.messages');
         const inputs = document.querySelectorAll("input");
+
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].style.display = "block";
         }
@@ -41,4 +42,4 @@ class EnterName extends React.Component {
     }
 }
 
-export default EnterName
+export default EnterName;
