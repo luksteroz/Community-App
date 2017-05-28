@@ -212,7 +212,7 @@ body{
             @media (max-width: $breakPointTablet) {
             height: 20px;
             font-size: 18px;
-            width: 100%;
+            width: 100% !important;
             margin:0;
             }
         }
@@ -299,7 +299,6 @@ body{
                         }
                     }
                     input{
-                        display:block;
                         width: 100%;
                         height: 12%;
                         font-size: 10px;
