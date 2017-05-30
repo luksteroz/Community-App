@@ -1,28 +1,23 @@
 
-import ReactDOM from 'react-dom';
 import React from 'react';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import Description from './Description.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import {purple500, blue500} from 'material-ui/styles/colors';
-import Title from './Badge.jsx'
-import {Snackbar, RaisedButton, TextField, Paper} from 'material-ui';
+import Title from './Badge.jsx';
+import {Snackbar, TextField} from 'material-ui';
 import FlatButton from 'material-ui/FlatButton';
-
 
 
 class SortableComponent extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          items: this.props.items,
-          inputText: "",
-          description:"",
-          userName:"",
-          open: false,
-          display: "block",
+            items: this.props.items,
+            inputText: '',
+            description: '',
+            userName: '',
+            open: false,
+            display: 'block'
         };
     }
     onSortEnd = ({oldIndex, newIndex}) => {
@@ -30,7 +25,7 @@ class SortableComponent extends React.Component {
             items: arrayMove(this.state.items, oldIndex, newIndex),
         });
     }
-    handleAddTask=(event, index)=>{
+    handleAddTask=(event, index) => {
         event.preventDefault();
         console.log(event.currentTarget.index);
         const items = this.state.items.slice();
@@ -38,134 +33,144 @@ class SortableComponent extends React.Component {
             id: this.state.items.length,
             task: this.state.inputText,
             description: this.state.description,
-            user: this.props.userName,
-        }
+            user: this.props.userName
+        };
+
         items.push(element);
         this.setState({
-            inputText: "",
-            open: true,
+            inputText: '',
+            open: true
         });
-        if (typeof this.props.onAdd === "function") {
+        if (typeof this.props.onAdd === 'function') {
             this.props.onAdd(items, this.props.status);
         }
     }
-    handleEditTask=(e)=>{
+    handleEditTask=(e) => {
         this.setState({
-            inputText: e.target.value,
+            inputText: e.target.value
         });
     }
-    handleAddDescription=(description, id)=>{
-
+    handleAddDescription=(description, id) => {
         const items = this.state.items.slice();
-        console.log("co to jest items id",items[id]);
+
         items[id] = {
             id: items[id].id,
             task: items[id].task,
             description: description,
-            user: items[id].user,
-        }
-        if (typeof this.props.onAdd === "function") {
+            user: items[id].user
+        };
+        if (typeof this.props.onAdd === 'function') {
             this.props.onAdd(items, this.props.status);
         }
     }
-    handleRemoveTask=(e)=>{
+    handleRemoveTask=(e) => {
         const items = this.state.items.slice();
-        items.splice(e.currentTarget.value, 1)
+
+        items.splice(e.currentTarget.value, 1);
         this.setState({
-            items: items,
+            items: items
         });
-        if (typeof this.props.onAdd === "function") {
+        if (typeof this.props.onAdd === 'function') {
             this.props.onAdd(items, this.props.status);
         }
     }
-    handleMoveItem=(e)=>{
+    handleMoveItem=(e) => {
         const items = this.state.items.slice();
         const element = items[e.currentTarget.value];
+
         this.handleRemoveTask(e);
-        if (typeof this.props.onMove === "function") {
+        if (typeof this.props.onMove === 'function') {
             this.props.onMove(element, this.props.status);
         }
     }
-    handleSaveTodo=(e)=>{
+    handleSaveTodo=() => {
         this.props.onSave();
     }
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         this.setState({
-            items: nextProps.items,
-            })
-        }
+            items: nextProps.items
+        });
+    }
     render() {
         const DragHandle = SortableHandle(() =>
             <p className="dragLine">&#8691;</p>
         );
-        const SortableItem = SortableElement(({value, index}) =>{
+        const SortableItem = SortableElement(({value, index}) => {
             return (
-            <li className="boardText">
-                <FlatButton label={this.props.remove}
-                value={value.id}
-                secondary={true}
-                onClick={this.handleRemoveTask}
-                style={{width: "50%"}}/>
-                <FlatButton label={this.props.action2}
-                value={value.id}
-                onClick={this.handleMoveItem}
-                style={{width: "50%"}}/>
-                <br></br>
-                <h2>{value.task}</h2>
-                <Description newDescription={this.handleAddDescription}
-                id={value.id}
-                description={value}
-                task={value.task}
-                user={value.user}/>
-                <span> Added by {value.user}</span>
-                <DragHandle />
-            </li>)
+                <li className="boardText">
+                    <FlatButton label={ this.props.remove }
+                        value={ value.id }
+                        secondary={ true }
+                        onClick={ this.handleRemoveTask }
+                        style={ {width: '50%'} }
+                    />
+                    <FlatButton label={ this.props.action2 }
+                        value={ value.id }
+                        onClick={ this.handleMoveItem }
+                        style={ {width: '50%'} }
+                        />
+                        <br></br>
+                    <h2>{value.task}</h2>
+                    <Description newDescription={ this.handleAddDescription }
+                        id={ value.id }
+                        description={ value }
+                        task={ value.task }
+                        user={ value.user }
+                    />
+                    <span> Added by {value.user}</span>
+                    <DragHandle />
+                </li>);
         });
 
         const SortableList = SortableContainer(({items}) => {
             return (
-            <ul className="contentColumn">
-                {items.map((value, index) => {
-                    return (<SortableItem key={`item-${index}`}
-                        index={index}
-                        value={value}/>
-                )})}
-            </ul>
+                <ul className="contentColumn">
+                    { items.map((value, index) => {
+                    return (<SortableItem key={ `item-${ index }` }
+                            index={ index }
+                            value={ value }
+                            />
+                    )})}
+                </ul>
             );
         });
+
         return (
-        <div>
-            <div className="columns">
-                <Title status={this.props.status}
-                    length={this.state.items.length}
-                    onSave={this.handleSaveTodo}/>
-                <SortableList items={this.state.items}
-                onSortEnd={this.onSortEnd}
-                useDragHandle={true}
-                helperClass="SortableHelper"/>
-            </div>
-            <form onSubmit={this.handleAddTask}>
-                <MuiThemeProvider>
-                <div>
-                    <TextField
-                          floatingLabelText="Add new task"
-                          floatingLabelStyle={{color: "white"}}
-                          floatingLabelFocusStyle={{color: "white"}}
-                          value={this.state.inputText}
-                          fullWidth={true}
-                          onChange={this.handleEditTask}
-                          className="addTask"
-                          style={this.props.userName === "Unknown user" ? {display: "block"} : {display: "block"}}/>
-                    <Snackbar
-                        open={this.state.open}
-                        message="New task added to your list! :)"
-                        autoHideDuration={4000}
-                        style={{textAlign: "center"}}/>
+            <div>
+                <div className="columns">
+                    <Title status={ this.props.status }
+                        length={ this.state.items.length }
+                        onSave={ this.handleSaveTodo }
+                    />
+                    <SortableList items={ this.state.items }
+                        onSortEnd={ this.onSortEnd }
+                        useDragHandle={ true }
+                        helperClass="SortableHelper"/>
                 </div>
-                </MuiThemeProvider>
-            </form>
-        </div>)
+                <form onSubmit={ this.handleAddTask }>
+                    <MuiThemeProvider>
+                        <div>
+                            <TextField
+                                floatingLabelText="Add new task"
+                                floatingLabelStyle={ {color: 'white'} }
+                                floatingLabelFocusStyle={ {color: 'white'} }
+                                value={ this.state.inputText }
+                                fullWidth={ true }
+                                onChange={ this.handleEditTask }
+                                className="addTask"
+                                style={ this.props.userName === 'Unknown user' ? {display: 'block'} : {display: 'block'} }
+                            />
+                        <Snackbar
+                            open={ this.state.open }
+                            message="New task added to your list! :)"
+                            autoHideDuration={ 4000 }
+                            style={ {textAlign: 'center'} }
+                        />
+                        </div>
+                    </MuiThemeProvider>
+                </form>
+            </div>);
     }
 }
 
-export default SortableComponent
+export default SortableComponent;

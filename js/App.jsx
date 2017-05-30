@@ -1,19 +1,16 @@
-import ReactDOM from 'react-dom';
+import Container from './Container.jsx';
 import React from 'react';
-import Container from './Container.jsx'
-import Description from './Description.jsx'
+import ReactDOM from 'react-dom';
 
-class App extends React.Component{
-    constructor(props){
+class App extends React.Component {
+    constructor(props) {
         super(props);
     }
-    render(){
-        // return <Router history={hashHistory}>
-        //  <Route path='/' component={App}/>
-        // </Router>;
-        return <Container/>
+    render() {
+        return <Container />;
     }
+
 }
 ReactDOM.render(
-    <App/>,
+    <App />,
     document.getElementById('app'));
