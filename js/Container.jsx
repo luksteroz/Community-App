@@ -102,9 +102,9 @@ class Container extends React.Component {
             <div>
                 <Header newName={ this.handleNewName } />
                 <div className="container">
-                    <SortableComponent items={ this.state.toDo } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status='ToDo' remove='Remove' action2='Doing' userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
-                    <SortableComponent items={ this.state.doing } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status='Doing' remove='Remove' action2='Done' userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
-                    <SortableComponent items={ this.state.done } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status='Done' remove='Remove' userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
+                    <SortableComponent items={ this.state.toDo } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status="ToDo" remove="Remove" action2="Doing" userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
+                    <SortableComponent items={ this.state.doing } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status="Doing" remove="Remove" action2="Done" userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
+                    <SortableComponent items={ this.state.done } onMove={ this.handleOnMove } onAdd={ this.handleAddNewTask } status="Done" remove="Remove" userName={ this.state.userName } onSave={ this.handleSaveTodo }/>
                     <ChatApp userName={ this.state.userName } />
                 </div>
             </div>
