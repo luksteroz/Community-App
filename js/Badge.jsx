@@ -7,8 +7,6 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
 
 class Title extends React.Component {
@@ -24,7 +22,8 @@ class Title extends React.Component {
                 badgeContent={ this.props.length }
                 secondary={ true }
                 badgeStyle={ {top: 20, right: 20} }>
-                <IconButton tooltip="Tasks left">
+                <IconButton
+                  tooltip="Tasks left">
                 <NotificationsIcon />
                 </IconButton>
             </Badge>;

@@ -22,12 +22,11 @@ class SortableComponent extends React.Component {
     }
     onSortEnd = ({oldIndex, newIndex}) => {
         this.setState({
-            items: arrayMove(this.state.items, oldIndex, newIndex),
+            items: arrayMove(this.state.items, oldIndex, newIndex)
         });
     }
     handleAddTask=(event, index) => {
         event.preventDefault();
-        console.log(event.currentTarget.index);
         const items = this.state.items.slice();
         const element = {
             id: this.state.items.length,
@@ -145,7 +144,8 @@ class SortableComponent extends React.Component {
                     <SortableList items={ this.state.items }
                         onSortEnd={ this.onSortEnd }
                         useDragHandle={ true }
-                        helperClass="SortableHelper"/>
+                        helperClass="SortableHelper"
+                    />
                 </div>
                 <form onSubmit={ this.handleAddTask }>
                     <MuiThemeProvider>
