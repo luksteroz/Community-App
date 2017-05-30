@@ -27,30 +27,29 @@ class Header extends React.Component {
     handleLogIn=(e)=> {
         var auth = firebase.auth();
 
-                var provider = new firebase.auth.GoogleAuthProvider();
+        var provider = new firebase.auth.GoogleAuthProvider();
 
-                auth.signInWithPopup(provider).then((result) => {
+        auth.signInWithPopup(provider).then((result) => {
+            var token = result.credential.accessToken;
 
-                    var token = result.credential.accessToken;
+            var user = result.user;
 
-                    var user = result.user;
+            const userId = user.uid;
 
-                    const userId = user.uid;
+            const name = user.displayName;
 
-                    const name = user.displayName;
+            const photo = result.user.photoURL;
 
-                    const photo = result.user.photoURL;
+            this.setState({
+                user: name,
+                photo: photo
+            });
+            this.props.newName(name, photo);
+        }).catch((error) => {
+            var errorMessage = error.message;
 
-                    this.setState({
-                        user: name,
-                        photo: photo
-                    });
-                    this.props.newName(name, photo);
-                }).catch((error) => {
-                    var errorMessage = error.message;
-
-                    console.log(errorMessage);
-                });
+            console.log(errorMessage);
+        });
     }
 
     render() {
@@ -63,7 +62,8 @@ class Header extends React.Component {
                     <ToolbarGroup
                         firstChild={ true }
                         style={ {marginLeft: '5%',
-                            padding: '0'} }
+                            padding: '0',
+                            height: '8vh'} }
                     >
                         <IconMenu
                             iconButtonElement={
@@ -74,8 +74,14 @@ class Header extends React.Component {
                             value={ this.state.valueMultiple }
                             multiple={ true }
                         >
-                            <MenuItem value="1" primaryText="Log in" />
-                            <MenuItem value="2" primaryText="Sign Out" />
+                            <MenuItem value="1"
+                                primaryText="Log in"
+                                onClick={ this.handleLogIn }
+                            />
+                            <MenuItem value="2"
+                                primaryText="Sign Out"
+                                onClick={ this.handleSignOut }
+                            />
                             <MenuItem value="4" primaryText="About Me" />
                             <MenuItem value="5" primaryText="GitHub" />
                         </IconMenu>
@@ -91,6 +97,7 @@ class Header extends React.Component {
                         </ListItem>
                         <ToolbarSeparator />
                         <RaisedButton label="Log in with Google"
+                            className="log-button"
                             tooltip="Listings"
                             primary={ true }
                             onClick={ this.handleLogIn }
@@ -98,6 +105,7 @@ class Header extends React.Component {
                         <RaisedButton
                             label="Sign Out"
                             style={ {marginRight: '0'} }
+                            className="logout-button"
                             secondary={ true }
                             onClick={ this.handleSignOut }
                         />

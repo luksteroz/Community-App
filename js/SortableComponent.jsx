@@ -125,10 +125,10 @@ class SortableComponent extends React.Component {
             return (
                 <ul className="contentColumn">
                     { items.map((value, index) => {
-                    return (<SortableItem key={ `item-${ index }` }
+                        return (<SortableItem key={ `item-${ index }` }
                             index={ index }
                             value={ value }
-                            />
+                        />
                     )})}
                 </ul>
             );

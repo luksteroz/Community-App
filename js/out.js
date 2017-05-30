@@ -26103,13 +26103,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactDom = __webpack_require__(15);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(15);
 
 var _ChatApp = __webpack_require__(286);
 
@@ -26154,18 +26152,18 @@ var Container = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
 
         _this.handleSaveTodo = function (event) {
-            console.log("działa");
-            firebase.database().ref("TodoApp/").set(_this.state);
+            console.log('działa');
+            firebase.database().ref('TodoApp/').set(_this.state);
         };
 
         _this.handleAddNewTask = function (array, taskList) {
-            var curr = "";
-            if (taskList === "ToDo") {
-                curr = "toDo";
-            } else if (taskList === "Doing") {
-                curr = "doing";
-            } else if (taskList === "Done") {
-                curr = "done";
+            var curr = '';
+            if (taskList === 'ToDo') {
+                curr = 'toDo';
+            } else if (taskList === 'Doing') {
+                curr = 'doing';
+            } else if (taskList === 'Done') {
+                curr = 'done';
             }
             var items = array.map(function (value, index) {
                 return {
@@ -26175,26 +26173,28 @@ var Container = function (_React$Component) {
                     user: value.user
                 };
             });
+
             _this.setState(_defineProperty({}, '' + curr, items));
         };
 
         _this.handleOnMove = function (element, taskList) {
             var tab = [];
-            var curr = "";
-            if (taskList === "ToDo") {
+            var curr = '';
+
+            if (taskList === 'ToDo') {
                 tab = _this.state.doing.slice();
-                curr = "doing";
-            } else if (taskList === "Doing") {
+                curr = 'doing';
+            }
+            if (taskList === 'Doing') {
                 tab = _this.state.done.slice();
-                curr = "done";
+                curr = 'done';
             }
             tab.push(element);
             _this.setState(_defineProperty({}, '' + curr, tab));
-            console.log("czy doszlo do doing", _this.state);
         };
 
         _this.handleNewName = function (name, photo) {
-            console.log("nowy uzytkownik", name, photo);
+            console.log('nowy uzytkownik', name, photo);
             _this.setState({
                 userName: name,
                 photo: photo
@@ -26205,8 +26205,8 @@ var Container = function (_React$Component) {
             toDo: [],
             doing: [],
             done: [],
-            userName: "Unknown user",
-            photo: ""
+            userName: 'Unknown user',
+            photo: ''
         };
         return _this;
     }
@@ -26216,22 +26216,26 @@ var Container = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            firebase.database().ref("TodoApp/").on("value", function (snapshot) {
+            firebase.database().ref('TodoApp/').on('value', function (snapshot) {
                 var currentMessages = snapshot.val();
+
                 if (currentMessages.toDo != null) {
-                    console.log("todo");
+                    console.log('todo');
                     _this2.setState({
                         toDo: currentMessages.toDo
                     });
-                }if (currentMessages.doing != null) {
+                }
+                if (currentMessages.doing != null) {
                     _this2.setState({
                         doing: currentMessages.doing
                     });
-                }if (currentMessages.done != null) {
+                }
+                if (currentMessages.done != null) {
                     _this2.setState({
                         done: currentMessages.done
                     });
-                }if (currentMessages.currentUser != null) {
+                }
+                if (currentMessages.currentUser != null) {
                     _this2.setState({
                         userName: currentMessages.user
                     });
@@ -26484,7 +26488,9 @@ var Title = function (_React$Component) {
                         this.props.status
                     ),
                     iconElementRight: _react2.default.createElement(Menu, null),
-                    iconElementLeft: _react2.default.createElement(Notify, null) })
+                    iconElementLeft: _react2.default.createElement(Notify, null),
+                    className: 'title-column'
+                })
             );
         }
     }]);
@@ -26891,7 +26897,6 @@ var Header = function (_React$Component) {
             var provider = new firebase.auth.GoogleAuthProvider();
 
             auth.signInWithPopup(provider).then(function (result) {
-
                 var token = result.credential.accessToken;
 
                 var user = result.user;
@@ -26941,7 +26946,8 @@ var Header = function (_React$Component) {
                             {
                                 firstChild: true,
                                 style: { marginLeft: '5%',
-                                    padding: '0' }
+                                    padding: '0',
+                                    height: '8vh' }
                             },
                             _react2.default.createElement(
                                 _materialUi.IconMenu,
@@ -26974,6 +26980,7 @@ var Header = function (_React$Component) {
                             ),
                             _react2.default.createElement(_Toolbar.ToolbarSeparator, null),
                             _react2.default.createElement(_materialUi.RaisedButton, { label: 'Log in with Google',
+                                className: 'log-button',
                                 tooltip: 'Listings',
                                 primary: true,
                                 onClick: this.handleLogIn
@@ -26981,6 +26988,7 @@ var Header = function (_React$Component) {
                             _react2.default.createElement(_materialUi.RaisedButton, {
                                 label: 'Sign Out',
                                 style: { marginRight: '0' },
+                                className: 'logout-button',
                                 secondary: true,
                                 onClick: this.handleSignOut
                             })
